@@ -1,5 +1,5 @@
 """
-URL configuration for crowdcam project.
+URL configuration for crowdcam_server project.
 
 The `urlpatterns` list routes URLs to views. For more information please see:
     https://docs.djangoproject.com/en/5.0/topics/http/urls/
@@ -16,8 +16,10 @@ Including another URLconf
 """
 
 from django.contrib import admin
-from django.urls import path
-
+from django.urls import path, include
+from crowdcam_server import views
 urlpatterns = [
     path("admin/", admin.site.urls),
+    path("crowd_app", include("crowd_app.urls")),
+    path("", views.index)
 ]
