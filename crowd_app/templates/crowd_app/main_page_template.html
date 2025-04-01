@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <!-- placeholder title for page title-->
+    <title>{% block title %}{%endblock%}</title>
+    <meta charset="UTF-8">
+    <meta name="author" content="Steven Casada">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+
+    <header>
+        <h1>CorwdCam</h1>
+    </header>
+
+    <nav>
+        <ul style="list-style: none;">
+            <li>Page 1</li>
+            <li>Page 2</li>
+            <li>Page 3</li>
+        </ul>
+    </nav>
+
+    <main>
+    <!-- variable content for main elements-->
+    {% block content %}
+
+    {% endblock %}
+    </main>
+
+    <footer>
+        This site is for educational purposes only.
+    </footer>
+
+</body>
+</html>
