@@ -1,0 +1,23 @@
+{
+  "image": "mcr.microsoft.com/devcontainers/universal:2",
+  "waitFor": "onCreateCommand",
+  "updateContentCommand": "pip install -r requirements.txt && python manage.py migrate",
+  "postCreateCommand": "cp .env.example .env",
+  "postAttachCommand": {
+    "server": "python manage.py runserver"
+  },
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "ms-python.python"
+      ]
+    }
+  },
+  "portsAttributes": {
+    "8000": {
+      "label": "Application",
+      "onAutoForward": "openPreview"
+    }
+  },
+  "forwardPorts": [8000]
+}
