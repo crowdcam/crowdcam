@@ -22,8 +22,6 @@ def create_user(request):
 
     if request.method == 'POST':
         form = UserCreationForm(request.POST)
-        print(form.is_valid())
-        print(form.errors)
         if form.is_valid():
             form.save()  # Save the new user to the database
             messages.success(request, "Your account has been created successfully!")
