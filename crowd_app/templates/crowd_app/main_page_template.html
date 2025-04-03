@@ -1,23 +1,25 @@
+{% load static %}
 <!DOCTYPE html>
 <html>
+<link rel="stylesheet" href="{% static 'global_styles.css' %}">
 <head lang="en">
     <!-- placeholder title for page title-->
     <title>{% block title %}{%endblock%}</title>
     <meta charset="UTF-8">
-    <meta name="author" content="Steven Casada">
+    <meta name="author" content="CrowdCam">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 <body>
 
     <header>
-        <h1>CorwdCam</h1>
+        <h1><a href="/">CrowdCam</a></h1>
     </header>
 
     <nav>
         <ul style="list-style: none;">
-            <li>Page 1</li>
-            <li>Page 2</li>
-            <li>Page 3</li>
+            <li><a href="#">Page 1</a></li>
+            <li><a href="#">Page 2</a></li>
+            <li><a href="#">Page 3</a></li>
         </ul>
     </nav>
 
