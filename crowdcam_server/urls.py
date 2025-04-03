@@ -20,6 +20,6 @@ from django.urls import path, include
 from crowdcam_server import views
 urlpatterns = [
     path("admin/", admin.site.urls),
-    path("crowd_app/", include("crowd_app.urls")),
-    path("", views.index)
+    path("", include("crowd_app.urls")),
+
 ]
