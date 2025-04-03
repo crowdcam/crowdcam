@@ -21,4 +21,5 @@ from crowdcam_server import views
 urlpatterns = [
     path("admin/", admin.site.urls),
     path("", include("crowd_app.urls")),
+
 ]

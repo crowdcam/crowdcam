@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="en-US">
+
+<head>
+    <meta charset="utf-8" />
+    <title>Media Listing Page</title>
+</head>
+
+<body>
+    {% if media %}
+    <h1>Media: {{media.id}}</h1>
+
+    ID: {{media.id}}
+    <br>
+    Path: {{ media.media_path }}<br>
+    User ID: {{ media.user_id }}<br>
+    Organization ID: {{ media.organization_id }}<br>
+    Status: {{ media.status }}<br>
+    Created: {{ media.created }}
+
+
+    {% else %}
+    <p>404: Media not found</p>
+    {% endif %}
+</body>
+
+</html>
