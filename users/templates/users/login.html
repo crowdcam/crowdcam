@@ -6,7 +6,7 @@ Login to your account
 
 {% block content %}
 <h1>Login to your account</h1>
-    <form action="/users/login/" method="post">
+    <form action="{% url 'users:login' %}" method="post">
         {% csrf_token %}
         {{ form }}
         <button type="submit">Login</button>

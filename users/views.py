@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
-from django.contrib.auth import login
+from django.contrib.auth import login, logout
 
 app_name = "users"
 
@@ -35,3 +35,9 @@ def user_login(request):
         form = AuthenticationForm()
     context = {"form": form}
     return render(request, "users/login.html", context)
+
+def user_logout(request):
+    if(request.method == "POST"):
+        logout(request)
+        return redirect("users:login")
+    return render(request, "users/logout.html")
