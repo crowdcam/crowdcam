@@ -17,21 +17,3 @@ def media_view(request, media_id):
     context = {"media": media}
     return render(request, "crowd_app/media/view.html", context)
 
-def create_user(request):
-    form = None
-
-    if request.method == 'POST':
-        form = UserCreationForm(request.POST)
-        if form.is_valid():
-            form.save()  # Save the new user to the database
-            messages.success(request, "Your account has been created successfully!")
-            return redirect('login')  # Redirect to the login page or another page
-        else:
-            messages.error(request, form.errors)
-        
-    else:
-        form = UserCreationForm()
-        
-    context = {"form": form}
-    return render(request, 'crowd_app/create_user.html', context)
-

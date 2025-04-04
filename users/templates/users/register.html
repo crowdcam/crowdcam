@@ -1,0 +1,16 @@
+{% extends "crowd_app/main_page_template.html" %}
+
+{% block title %}
+Create an account
+{% endblock %}
+
+{% block content %}
+<h1>Create a new account</h1>
+    <form action="/users/create_user/" method="post">
+        {% csrf_token %}
+        {{ form }}
+        <button type="submit">Submit!</button>
+    </form>
+
+{% endblock %}
+
