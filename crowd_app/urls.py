@@ -3,6 +3,8 @@ from django.views.generic import RedirectView
 from django.contrib.auth.views import LoginView
 from . import views
 
+app_name = "crowd_app"
+
 urlpatterns = [
     path("", views.index, name="home"),
     path("media", views.media_index, name="media_index"),
