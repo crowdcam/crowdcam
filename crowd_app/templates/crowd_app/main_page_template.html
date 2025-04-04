@@ -2,6 +2,7 @@
 <!DOCTYPE html>
 <html>
 <link rel="stylesheet" href="{% static 'global_styles.css' %}">
+
 <head lang="en">
     <!-- placeholder title for page title-->
     <title>{% block title %}{%endblock%}</title>
@@ -9,6 +10,7 @@
     <meta name="author" content="CrowdCam">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
+
 <body>
 
     <header>
@@ -24,10 +26,10 @@
     </nav>
 
     <main>
-    <!-- variable content for main elements-->
-    {% block content %}
+        <!-- variable content for main elements-->
+        {% block content %}
 
-    {% endblock %}
+        {% endblock %}
     </main>
 
     <footer>
@@ -35,4 +37,5 @@
     </footer>
 
 </body>
+
 </html>

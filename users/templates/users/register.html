@@ -6,11 +6,10 @@ Create an account
 
 {% block content %}
 <h1>Create a new account</h1>
-    <form action="{% url 'users:create_user' %}" method="post">
-        {% csrf_token %}
-        {{ form }}
-        <button type="submit">Submit!</button>
-    </form>
+<form action="{% url 'users:create_user' %}" method="post">
+    {% csrf_token %}
+    {{ form }}
+    <button type="submit">Submit!</button>
+</form>
 
 {% endblock %}
-

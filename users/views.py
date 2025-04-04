@@ -4,6 +4,7 @@ from django.contrib.auth import login, logout
 
 app_name = "users"
 
+
 # Create your views here.
 def register_user(request):
     if(request.method == "POST"):
@@ -24,6 +25,7 @@ def register_user(request):
     context = {"form": form}
     return render(request, "users/register.html", context)
 
+
 def user_login(request):
     
     if(request.method == "POST"):
@@ -35,6 +37,7 @@ def user_login(request):
         form = AuthenticationForm()
     context = {"form": form}
     return render(request, "users/login.html", context)
+
 
 def user_logout(request):
     if(request.method == "POST"):

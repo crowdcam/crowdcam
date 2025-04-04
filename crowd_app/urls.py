@@ -1,6 +1,4 @@
 from django.urls import path
-from django.views.generic import RedirectView
-from django.contrib.auth.views import LoginView
 from . import views
 
 app_name = "crowd_app"

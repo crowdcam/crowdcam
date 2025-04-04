@@ -6,10 +6,9 @@ Logout Page
 
 {% block content %}
 <h1>Logout of your account</h1>
-    <form action="{% url 'users:logout' %}" method="post">
-        {% csrf_token %}
-        <button type="submit">Logout</button>
-    </form>
+<form action="{% url 'users:logout' %}" method="post">
+    {% csrf_token %}
+    <button type="submit">Logout</button>
+</form>
 
 {% endblock %}
-
