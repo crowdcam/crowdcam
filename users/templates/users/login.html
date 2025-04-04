@@ -1,0 +1,16 @@
+{% extends "crowd_app/main_page_template.html" %}
+
+{% block title %}
+Login to your account
+{% endblock %}
+
+{% block content %}
+<h1>Login to your account</h1>
+    <form action="/users/login/" method="post">
+        {% csrf_token %}
+        {{ form }}
+        <button type="submit">Login</button>
+    </form>
+
+{% endblock %}
+
