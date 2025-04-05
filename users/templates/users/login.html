@@ -9,6 +9,14 @@ Login to your account
 <form action="{% url 'users:login' %}" method="post">
     {% csrf_token %}
     {{ form }}
+    
+    <!--If a user tries to access a page that requires login while logged out,
+    they get redirected to this page with a 'next' parameter included to send them
+    back to the original page
+    This bit of code helps that redirection process-->
+    {% if request.GET.next %}
+        <input type="hidden" name="next" value="{{ request.GET.next }}"/>
+    {% endif %}
     <button type="submit">Login</button>
 </form>
 
