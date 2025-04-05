@@ -1,5 +1,5 @@
 from django.db import models
-import os
+
 
 # Create your models here.
 class Media(models.Model):

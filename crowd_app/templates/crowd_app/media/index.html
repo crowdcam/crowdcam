@@ -1,26 +1,29 @@
 <!doctype html>
 <html lang="en-US">
-  <head>
-    <meta charset="utf-8" />
-    <title>Media Listing Page</title>
-  </head>
+
+<head>
+        <meta charset="utf-8" />
+        <title>Media Listing Page</title>
+</head>
+
 <body>
-    {% if media_list %}
-            <ul>
-                    {% for media in media_list %}
-                            <li>
-                                    ID: {{media.id}}
-                                    <br>
-                                    Path: {{ media.media_path }}<br>
-                                    User ID: {{ media.user_id }}<br>
-                                    Organization ID: {{ media.organization_id }}<br>
-                                    Status: {{ media.status }}<br>
-                                    Created: {{ media.created }}
-                            </li>
-                    {% endfor %}
-            </ul>
-    {% else %}
-            <p>No media was found</p>
-    {% endif %}
+        {% if media_list %}
+        <ul>
+                {% for media in media_list %}
+                <li>
+                        ID: {{media.id}}
+                        <br>
+                        Path: {{ media.media_path }}<br>
+                        User ID: {{ media.user_id }}<br>
+                        Organization ID: {{ media.organization_id }}<br>
+                        Status: {{ media.status }}<br>
+                        Created: {{ media.created }}
+                </li>
+                {% endfor %}
+        </ul>
+        {% else %}
+        <p>No media was found</p>
+        {% endif %}
 </body>
+
 </html>
