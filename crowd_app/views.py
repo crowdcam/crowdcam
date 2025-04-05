@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from django.contrib.auth.decorators import login_required
 from .models import Media
 
 
@@ -18,3 +19,8 @@ def media_view(request, media_id):
     context = {"media": media}
     return render(request, "crowd_app/media/view.html", context)
 
+# login_url redirects users to the provided url given they are not logged in
+# @login_required is a decorator that says hey this needs login
+@login_required(login_url="/users/login")
+def upload(request):
+    return render(request, "crowd_app/upload.html")
