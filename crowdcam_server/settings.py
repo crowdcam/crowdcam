@@ -26,6 +26,9 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+# LOGIN_URL automatically redirects users to this URL if they are not logged in
+LOGIN_URL = "/users/login/"
+
 # Application definition
 
 INSTALLED_APPS = [

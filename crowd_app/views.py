@@ -21,6 +21,6 @@ def media_view(request, media_id):
 
 # login_url redirects users to the provided url given they are not logged in
 # @login_required is a decorator that says hey this needs login
-@login_required(login_url="/users/login")
+@login_required()
 def upload(request):
     return render(request, "crowd_app/upload.html")
