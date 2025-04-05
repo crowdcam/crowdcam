@@ -2,7 +2,9 @@ from django.test import TestCase
 from django.urls import reverse
 from django.contrib.auth.models import User
 
+
 class UserLoginViewTests(TestCase):
+
     def set_up(self):
         # Create a test user
         self.user = User.objects.create_user(username="testuser", password="password123")

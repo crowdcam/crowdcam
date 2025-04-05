@@ -21,13 +21,13 @@
         <ul style="list-style: none;">
             {% if not user.is_authenticated %}
 
-                <li><a href="{% url 'users:create_user' %}">Create an account</a></li>
-                <li><a href="{% url 'users:login' %}">Login</a></li>
+            <li><a href="{% url 'users:create_user' %}">Create an account</a></li>
+            <li><a href="{% url 'users:login' %}">Login</a></li>
 
             {% else %}
 
-                <li><a href="{% url 'users:logout' %}">Logout</a></li>
-                <li><a href="{% url 'crowd_app:upload' %}">Upload</a></li>
+            <li><a href="{% url 'users:logout' %}">Logout</a></li>
+            <li><a href="{% url 'crowd_app:upload' %}">Upload</a></li>
 
             {% endif %}
 
