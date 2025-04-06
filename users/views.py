@@ -32,6 +32,12 @@ def user_login(request):
         form = AuthenticationForm(data=request.POST)
         if(form.is_valid()):
             login(request, form.get_user())
+
+            # check if any "next" redirect was given
+            # field in template was named "next"
+            if("next" in request.POST):
+                return redirect(request.POST.get("next"))
+            
             return redirect("crowd_app:media_index")
     else:
         form = AuthenticationForm()
