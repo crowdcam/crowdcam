@@ -37,9 +37,10 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    "mod_wsgi.server",
     "crowd_app",
     "crowdcam_server",
+    "mod_wsgi.server",
+
 ]
 
 MIDDLEWARE = [
