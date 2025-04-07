@@ -19,12 +19,12 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = "django-insecure-z-d8uesndc9i@xk9-i^k1a-)ai4oe0cwo4lv^^tszeo54fqkw+"
+SECRET_KEY = "django-insecure-p@%ildx9)&jpssvfleb2atzs6ewr@1^z2=7*!bip@ul)kn#^@5"
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+#DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 # LOGIN_URL automatically redirects users to this URL if they are not logged in
 LOGIN_URL = "/users/login/"
@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    "mod_wsgi.server",
     "crowd_app",
     "users",
     "crowdcam_server"
