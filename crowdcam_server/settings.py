@@ -54,7 +54,6 @@ INSTALLED_APPS = [
 ]
 
 if(not(DEBUG)):
-    print(DEBUG)
     INSTALLED_APPS.append("mod_wsgi.server")
 
 MIDDLEWARE = [
