@@ -11,6 +11,16 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 """
 
 from pathlib import Path
+import environ
+
+# Creates the structure our env file is supposed to mimic
+env = environ.Env(
+    DEBUG=(bool, False),
+    SECRET_KEY=(str, 'abc')
+)
+
+# read the .env file
+environ.Env.read_env()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -19,10 +29,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = "django-insecure-p@%ildx9)&jpssvfleb2atzs6ewr@1^z2=7*!bip@ul)kn#^@5"
+SECRET_KEY = env('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-#DEBUG = True
+DEBUG = env('DEBUG')
 
 ALLOWED_HOSTS = ['*']
 
@@ -38,11 +48,13 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    "mod_wsgi.server",
     "crowd_app",
     "users",
     "crowdcam_server"
 ]
+
+if(not(DEBUG)):
+    INSTALLED_APPS.append("mod_wsgi.server")
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
