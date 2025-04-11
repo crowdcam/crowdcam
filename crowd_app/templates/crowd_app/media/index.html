@@ -1,29 +1,28 @@
-<!doctype html>
-<html lang="en-US">
+{% extends "crowd_app/main_page_template.html" %}
+{% block title%}Upload Media{% endblock%}
+{% block content %}
+<!-- Main content goes here-->
 
-<head>
-        <meta charset="utf-8" />
-        <title>Media Listing Page</title>
-</head>
-
-<body>
-        {% if media_list %}
-        <ul>
+{% if media_list %}
+        
                 {% for media in media_list %}
-                <li>
+                
                         ID: {{media.id}}
                         <br>
                         Path: {{ media.media_path }}<br>
                         User ID: {{ media.user_id }}<br>
                         Organization ID: {{ media.organization_id }}<br>
                         Status: {{ media.status }}<br>
-                        Created: {{ media.created }}
-                </li>
+                        Created: {{ media.created }}<br>
+                
+                <a href="{{ url }}/media/{{media.id}}"><img src="{{ media.media_path.url }}" style="max-width: 256px;"></a>
+                <br>
+                <br>
                 {% endfor %}
-        </ul>
+        
         {% else %}
         <p>No media was found</p>
         {% endif %}
-</body>
 
-</html>
+<!-- End of content variable-->
+{% endblock %}
