@@ -37,4 +37,4 @@ class Media(models.Model):
     created = models.DateField(auto_now_add=True)
 
     def __str__(self):
-        return self.media_path
+        return str(self.media_path)
