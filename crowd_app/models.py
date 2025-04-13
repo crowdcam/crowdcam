@@ -10,14 +10,14 @@ def media_path_formatter(instance, filename):
     return Path ('media') / org / user / 'images' / filename
 
 class Organization(models.Model):
-    #TODO validate feild length
+    #TODO validate field length
     name = models.CharField(max_length=255)
 
     def __str__(self):
         return self.name
 
 class Tag(models.Model):
-    #TODO validate feild length
+    #TODO validate field length
     name = models.CharField(max_length=50)
 
     def __str__(self):
