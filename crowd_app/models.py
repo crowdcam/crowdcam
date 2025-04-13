@@ -1,19 +1,40 @@
 from django.db import models
+from django.contrib.auth.models import User
+from pathlib import Path
 
+
+def media_path_formatter(instance, filename):
+    #TODO finish org path
+    org = instance.organization.name.replace(" ", "_")
+    user = instance.user.username
+    return Path ('media') / org / user / 'images' / filename
+
+class Organization(models.Model):
+    #TODO validate field length
+    name = models.CharField(max_length=255)
+
+    def __str__(self):
+        return self.name
+
+class Tag(models.Model):
+    #TODO validate field length
+    name = models.CharField(max_length=50)
+
+    def __str__(self):
+        return self.name
 
 # Create your models here.
 class Media(models.Model):
     # Explicit ID is not needed as it is handled automatically
     
-    # TODO: when we get media storage going, set this up
-    # media_path = models.FilePathField()
-    media_path = models.CharField(max_length=200)
-
-    # TODO: user and org ID should be forein keys
-    user_id = models.IntegerField()
-    organization_id = models.IntegerField()
+    media_path = models.FileField(upload_to=media_path_formatter)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    organization = models.ForeignKey(Organization, on_delete=models.CASCADE)
+    # by default set tag to none, and on delete set tag feild to null
+    tag = models.ForeignKey(Tag, on_delete=models.SET_NULL, null=True, blank=True)
     status = models.BooleanField(default=False)
+    # use argurment auto new add to set the time the media was uploaded.
     created = models.DateField(auto_now_add=True)
 
     def __str__(self):
-        return self.media_path
+        return str(self.media_path)

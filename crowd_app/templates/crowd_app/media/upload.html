@@ -1,0 +1,14 @@
+{% extends "crowd_app/main_page_template.html" %}
+{% block title%}Upload Media{% endblock%}
+{% block content %}
+<!-- Main content goes here-->
+<h2>Upload Media</h2>
+
+<form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Upload</button>
+</form>
+<a href="">Back to Media List</a>
+<!-- End of content variable-->
+{% endblock %}
