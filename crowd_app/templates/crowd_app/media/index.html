@@ -15,7 +15,7 @@
                         Status: {{ media.status }}<br>
                         Created: {{ media.created }}<br>
                 
-                <a href="{% url 'media_view' media.id %}"><img src="{{ media.media_path.url }}" style="max-width: 256px;"></a>
+                <a href="{% url 'crowd_app:media_view' media.id %}"><img src="{{ media.media_path.url }}" style="max-width: 256px;"></a>
                 <br>
                 <br>
                 {% endfor %}
