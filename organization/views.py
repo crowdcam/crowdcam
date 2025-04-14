@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import Group, Permission
 from django.contrib.contenttypes.models import ContentType
@@ -56,8 +56,10 @@ def create_org(request):
     return render(request, "organization/create_org.html", {'form': form})
 
 @login_required
-def org_view(request):
-    return render(request, "organization/org_view.html")
+def org_view(request, org_id):
+    org = get_object_or_404(Organization, id=org_id)
+    context = {"org": org}
+    return render(request, "organization/org_view.html", context)
 
 @login_required
 def user_orgs(request):

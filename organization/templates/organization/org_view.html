@@ -1,1 +1,18 @@
-help
+{% extends "crowd_app/main_page_template.html" %}
+{% block title%}Organization Info{% endblock%}
+{% block content %}
+<!-- Main content goes here-->
+
+{% if org %}
+<h1>Org ID: {{org.id}}</h1>
+
+Name: {{org.name}}
+<br>
+
+
+{% else %}
+<p>404: Org not found</p>
+{% endif %}
+
+<!-- End of content variable-->
+{% endblock %}
