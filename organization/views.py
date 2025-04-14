@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import Group, Permission
 from django.contrib.contenttypes.models import ContentType
+from django.core.exceptions import PermissionDenied
 from .models import Organization
 from .forms import OrganizationForm
 
@@ -58,6 +59,8 @@ def create_org(request):
 @login_required
 def org_view(request, org_id):
     org = get_object_or_404(Organization, id=org_id)
+    if(not(request.user.has_perm(org.name + "_user"))):
+        raise PermissionDenied()
     context = {"org": org}
     return render(request, "organization/org_view.html", context)
 
