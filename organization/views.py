@@ -44,12 +44,9 @@ def create_org(request):
             )
 
             # Add the permissions to the groups
-            user_group.permissions.add(user_perms)
-            mod_group.permissions.add(mod_perms)
-            mod_group.permissions.add(user_perms)
-            admin_group.permissions.add(admin_perms)
-            admin_group.permissions.add(mod_perms)
-            admin_group.permissions.add(user_perms)
+            user_group.permissions.set([user_perms])
+            mod_group.permissions.set([mod_perms, user_perms])
+            admin_group.permissions.set([admin_perms, mod_perms, user_perms])
             
             # send user to media index page after success
             return redirect('/')
@@ -61,3 +58,17 @@ def create_org(request):
 @login_required
 def org_view(request):
     return render(request, "organization/org_view.html")
+
+@login_required
+def user_orgs(request):
+
+    # get all organizations to filter through
+    organizations = Organization.objects.all()
+
+    user_orgs = []
+
+    for org in organizations:
+        if(request.user.has_perm(org.name + "_user")):
+            user_orgs.append(org)
+    context = {"orgs": user_orgs}
+    return render(request, "organization/index.html", context)
