@@ -7,3 +7,12 @@ class Organization(models.Model):
 
     def __str__(self):
         return self.name
+
+    def get_user_perm(self):
+        return self.name + "_user"
+
+    def get_mod_perm(self):
+        return self.name + "_mod"
+
+    def get_admin_perm(self):
+        return self.name + "_admin"

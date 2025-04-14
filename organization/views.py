@@ -20,26 +20,26 @@ def create_org(request):
             org.save()
 
             # create groups for the org
-            admin_group = Group.objects.create(name=org.name + "_admin")
-            mod_group = Group.objects.create(name=org.name + "_mod")
-            user_group = Group.objects.create(name=org.name + "_user")
+            admin_group = Group.objects.create(name=org.get_admin_perm)
+            mod_group = Group.objects.create(name=org.get_mod_perm)
+            user_group = Group.objects.create(name=org.get_user_perm)
 
             # grab the content type for the permissions
             content_type = ContentType.objects.get_for_model(Organization)
 
             # create permissions for each group
             user_perms = Permission.objects.create(
-                codename=org.name+"_user",
+                codename=org.get_user_perm,
                 name="Member of the organization",
                 content_type=content_type
             )
             mod_perms = Permission.objects.create(
-                codename=org.name+"_mod",
+                codename=org.get_mod_perm,
                 name="Moderator of the organization",
                 content_type=content_type
             )
             admin_perms = Permission.objects.create(
-                codename=org.name+"_admin",
+                codename=org.get_admin_perm,
                 name="Admin of the organization",
                 content_type=content_type
             )
@@ -59,7 +59,7 @@ def create_org(request):
 @login_required
 def org_view(request, org_id):
     org = get_object_or_404(Organization, id=org_id)
-    if(not(request.user.has_perm(org.name + "_user"))):
+    if(not(request.user.has_perm(org.get_user_perm))):
         raise PermissionDenied()
     context = {"org": org}
     return render(request, "organization/org_view.html", context)
@@ -73,7 +73,7 @@ def user_orgs(request):
     user_orgs = []
 
     for org in organizations:
-        if(request.user.has_perm(org.name + "_user")):
+        if(request.user.has_perm(org.get_user_perm)):
             user_orgs.append(org)
     context = {"orgs": user_orgs}
     return render(request, "organization/index.html", context)
