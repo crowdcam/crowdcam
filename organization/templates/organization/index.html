@@ -11,7 +11,7 @@
         <br>
         Name: {{ org.name }}<br>
                 
-        <a href="{% url 'organization:org_view' org.id %}">org.name</a>
+        <a href="{% url 'organization:org_view' org.id %}">{{org.name}}</a>
         <br>
         <br>
     {% endfor %}
