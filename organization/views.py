@@ -109,7 +109,7 @@ def join_org(request):
             if selected_org is None:
                 context = {"form": form, "err": "Invalid Join Code. Either the code was wrong or the org is not accepting new users right now"}
                 
-                return render(request, "organization/admin/set_join_code.html", context)
+                return render(request, "organization/join_org.html", context)
 
             group = Group.objects.get(name=selected_org.get_user_group())
             request.user.groups.add(group)
@@ -118,4 +118,4 @@ def join_org(request):
         form = JoinCodeSubmit()
     
     context = {"form": form}
-    return render(request, "organization/admin/set_join_code.html", context)
+    return render(request, "organization/join_code.html", context)

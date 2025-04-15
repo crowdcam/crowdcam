@@ -4,6 +4,9 @@
 <!-- Main content goes here-->
 <h2>Join Organization</h2>
 
+{% if err %}
+<h3>{{err}}</h3>
+{% endif %}
 <form method="post" enctype="multipart/form-data">
     {% csrf_token %}
     {{ form.as_p }}
