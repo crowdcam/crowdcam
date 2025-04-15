@@ -129,4 +129,4 @@ def join_org(request):
         form = JoinCodeSubmit()
     
     context = {"form": form}
-    return render(request, "organization/join_code.html", context)
+    return render(request, "organization/join_org.html", context)
