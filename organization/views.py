@@ -1,20 +1,21 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from django.contrib.auth.decorators import login_required, user_passes_test
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import Group, Permission
 from django.contrib.contenttypes.models import ContentType
 from django.core.exceptions import PermissionDenied
 from .models import Organization
 from .forms import OrganizationForm, JoinCodeForm
+from guardian.shortcuts import assign_perm, get_objects_for_user
 
 def user_has_user_perms(user, org_id):
     org = get_object_or_404(Organization, id=org_id)
-    if(not(user.has_perm(org.get_user_perm()))):
+    if(not(user.has_perm('user', org))):
         raise PermissionDenied()
     return org
 
 def user_has_admin_perms(user, org_id):
     org = get_object_or_404(Organization, id=org_id)
-    if(not(user.has_perm(org.get_admin_perm()))):
+    if(not(user.has_perm('admin', org))):
         raise PermissionDenied()
     return org
 
@@ -30,34 +31,22 @@ def create_org(request):
             org.save()
 
             # create groups for the org
-            admin_group = Group.objects.create(name=org.get_admin_perm())
-            mod_group = Group.objects.create(name=org.get_mod_perm())
-            user_group = Group.objects.create(name=org.get_user_perm())
+            admin_group = Group.objects.create(name=org.get_admin_group())
+            mod_group = Group.objects.create(name=org.get_mod_group())
+            user_group = Group.objects.create(name=org.get_user_group())
 
-            # grab the content type for the permissions
-            content_type = ContentType.objects.get_for_model(Organization)
+            assign_perm('user', user_group, org)
+            assign_perm('user', mod_group, org)
+            assign_perm('user', admin_group, org)
+            assign_perm('mod', mod_group, org)
+            assign_perm('mod', admin_group, org)
+            assign_perm('admin', admin_group, org)
+            
 
-            # create permissions for each group
-            user_perms = Permission.objects.create(
-                codename=org.get_user_perm(),
-                name="Member of the organization",
-                content_type=content_type
-            )
-            mod_perms = Permission.objects.create(
-                codename=org.get_mod_perm(),
-                name="Moderator of the organization",
-                content_type=content_type
-            )
-            admin_perms = Permission.objects.create(
-                codename=org.get_admin_perm(),
-                name="Admin of the organization",
-                content_type=content_type
-            )
-
-            # Add the permissions to the groups
-            user_group.permissions.set([user_perms])
-            mod_group.permissions.set([mod_perms, user_perms])
-            admin_group.permissions.set([admin_perms, mod_perms, user_perms])
+            # set the user to be members of these groups
+            request.user.groups.add(user_group)
+            request.user.groups.add(mod_group)
+            request.user.groups.add(admin_group)
             
             # send user to media index page after success
             return redirect('/')
@@ -76,12 +65,7 @@ def org_view(request, org_id):
 def user_orgs(request):
 
     # get all organizations to filter through
-    organizations = Organization.objects.all()
-    user_orgs = []
-
-    for org in organizations:
-        if(request.user.has_perm(org.get_user_perm())):
-            user_orgs.append(org)
+    user_orgs = get_objects_for_user(request.user, 'organization.user')
     context = {"orgs": user_orgs}
     return render(request, "organization/index.html", context)
 
@@ -91,6 +75,7 @@ def admin_index(request, org_id):
     context = {"org": org}
     return render(request, "organization/admin/index.html", context)
 
+@login_required()
 def set_join_code(request, org_id):
     org = user_has_admin_perms(request.user, org_id)
 
@@ -105,3 +90,7 @@ def set_join_code(request, org_id):
     
     context = {"org": org, "form": form}
     return render(request, "organization/admin/set_join_code.html", context)
+
+@login_required()
+def join_org(request):
+    pass
