@@ -1,0 +1,13 @@
+{% extends "crowd_app/main_page_template.html" %}
+{% block title%}Create New Organization{% endblock%}
+{% block content %}
+<!-- Main content goes here-->
+<h2>Create a new Organization</h2>
+
+<form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Create New Org</button>
+</form>
+<!-- End of content variable-->
+{% endblock %}

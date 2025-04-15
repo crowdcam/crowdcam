@@ -23,7 +23,8 @@ from django.conf import settings
 urlpatterns = [
     path("admin/", admin.site.urls),
     path("", include("crowd_app.urls")),
-    path("users/", include("users.urls"))
+    path("users/", include("users.urls")),
+    path("organization/", include("organization.urls"))
 ]
 
 # code to make django serve files in debug
