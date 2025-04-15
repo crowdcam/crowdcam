@@ -4,7 +4,7 @@ from django.contrib.auth.models import Group, Permission
 from django.contrib.contenttypes.models import ContentType
 from django.core.exceptions import PermissionDenied
 from .models import Organization
-from .forms import OrganizationForm, JoinCodeForm
+from .forms import OrganizationForm, JoinCodeForm, JoinCodeSubmit
 from guardian.shortcuts import assign_perm, get_objects_for_user
 
 def user_has_user_perms(user, org_id):
@@ -84,6 +84,8 @@ def set_join_code(request, org_id):
         if form.is_valid():
             org = form.save(commit=False)
             org.save()
+
+            # TODO: Check for duplicate join codes from other orgs
             return redirect('organization:admin_index', org_id=org_id)
     else:
         form = JoinCodeForm(instance=org)
@@ -93,4 +95,27 @@ def set_join_code(request, org_id):
 
 @login_required()
 def join_org(request):
-    pass
+    if request.method == "POST":
+        form = JoinCodeSubmit(request.POST)
+        if form.is_valid():
+            join_code = form.cleaned_data["input_code"]
+            org_list = Organization.objects.all()
+            selected_org = None
+            for org in org_list:
+                if org.accepting_users:
+                    if org.join_code == join_code:
+                        selected_org = org
+
+            if selected_org is None:
+                context = {"form": form, "err": "Invalid Join Code. Either the code was wrong or the org is not accepting new users right now"}
+                
+                return render(request, "organization/admin/set_join_code.html", context)
+
+            group = Group.objects.get(name=selected_org.get_user_group())
+            request.user.groups.add(group)
+            return redirect('organization:org_view', org_id=selected_org.id)
+    else:
+        form = JoinCodeSubmit()
+    
+    context = {"form": form}
+    return render(request, "organization/admin/set_join_code.html", context)
