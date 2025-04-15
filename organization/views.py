@@ -82,10 +82,21 @@ def set_join_code(request, org_id):
     if request.method == "POST":
         form = JoinCodeForm(request.POST, instance=org)
         if form.is_valid():
-            org = form.save(commit=False)
-            org.save()
+
 
             # TODO: Check for duplicate join codes from other orgs
+            org_list = Organization.objects.all()
+            duplicates = False
+            for org in org_list:
+                if form.cleaned_data["join_code"] == org.join_code and org.id != org_id:
+                    duplicates = True
+                    break
+            if duplicates:
+                context = {"err": "That join code is already in use!", "org": org, "form": form}
+                return render(request, "organization/admin/set_join_code.html", context)
+
+            org = form.save(commit=False)
+            org.save()
             return redirect('organization:admin_index', org_id=org_id)
     else:
         form = JoinCodeForm(instance=org)
