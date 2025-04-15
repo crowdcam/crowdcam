@@ -51,7 +51,8 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "crowd_app",
     "users",
-    "crowdcam_server"
+    "crowdcam_server",
+    "organization"
 ]
 
 if(not(DEBUG)):

@@ -1,0 +1,79 @@
+from django.shortcuts import render, redirect, get_object_or_404
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import Group, Permission
+from django.contrib.contenttypes.models import ContentType
+from django.core.exceptions import PermissionDenied
+from .models import Organization
+from .forms import OrganizationForm
+
+
+
+# login_url redirects users to the provided url given they are not logged in
+# @login_required is a decorator that says hey this needs login
+@login_required()
+def create_org(request):
+    if request.method == 'POST':
+        form = OrganizationForm(request.POST)
+        if form.is_valid():
+            # add data from form
+            org = form.save(commit=False)
+            org.save()
+
+            # create groups for the org
+            admin_group = Group.objects.create(name=org.get_admin_perm())
+            mod_group = Group.objects.create(name=org.get_mod_perm())
+            user_group = Group.objects.create(name=org.get_user_perm())
+
+            # grab the content type for the permissions
+            content_type = ContentType.objects.get_for_model(Organization)
+
+            # create permissions for each group
+            user_perms = Permission.objects.create(
+                codename=org.get_user_perm(),
+                name="Member of the organization",
+                content_type=content_type
+            )
+            mod_perms = Permission.objects.create(
+                codename=org.get_mod_perm(),
+                name="Moderator of the organization",
+                content_type=content_type
+            )
+            admin_perms = Permission.objects.create(
+                codename=org.get_admin_perm(),
+                name="Admin of the organization",
+                content_type=content_type
+            )
+
+            # Add the permissions to the groups
+            user_group.permissions.set([user_perms])
+            mod_group.permissions.set([mod_perms, user_perms])
+            admin_group.permissions.set([admin_perms, mod_perms, user_perms])
+            
+            # send user to media index page after success
+            return redirect('/')
+    else:
+        form = OrganizationForm()
+
+    return render(request, "organization/create_org.html", {'form': form})
+
+@login_required
+def org_view(request, org_id):
+    org = get_object_or_404(Organization, id=org_id)
+    if(not(request.user.has_perm(org.get_user_perm()))):
+        raise PermissionDenied()
+    context = {"org": org}
+    return render(request, "organization/org_view.html", context)
+
+@login_required
+def user_orgs(request):
+
+    # get all organizations to filter through
+    organizations = Organization.objects.all()
+
+    user_orgs = []
+
+    for org in organizations:
+        if(request.user.has_perm(org.get_user_perm())):
+            user_orgs.append(org)
+    context = {"orgs": user_orgs}
+    return render(request, "organization/index.html", context)

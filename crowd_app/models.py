@@ -1,20 +1,13 @@
 from django.db import models
 from django.contrib.auth.models import User
 from pathlib import Path
-
+from organization.models import Organization
 
 def media_path_formatter(instance, filename):
     #TODO finish org path
     org = instance.organization.name.replace(" ", "_")
     user = instance.user.username
     return Path ('media') / org / user / 'images' / filename
-
-class Organization(models.Model):
-    #TODO validate field length
-    name = models.CharField(max_length=255)
-
-    def __str__(self):
-        return self.name
 
 class Tag(models.Model):
     #TODO validate field length
