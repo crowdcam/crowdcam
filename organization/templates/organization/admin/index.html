@@ -1,0 +1,15 @@
+{% extends "crowd_app/main_page_template.html" %}
+{% block title%}Your Orgs{% endblock%}
+{% block content %}
+<!-- Main content goes here-->
+
+{% if org %}
+    <h1>Welcome admin!</h1>       
+    ID: {{org.id}}
+    <br>
+    Name: {{ org.name }}<br>
+
+{% endif %}
+
+<!-- End of content variable-->
+{% endblock %}

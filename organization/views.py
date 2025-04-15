@@ -1,12 +1,22 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required, user_passes_test
 from django.contrib.auth.models import Group, Permission
 from django.contrib.contenttypes.models import ContentType
 from django.core.exceptions import PermissionDenied
 from .models import Organization
-from .forms import OrganizationForm
+from .forms import OrganizationForm, JoinCodeForm
 
+def user_has_user_perms(user, org_id):
+    org = get_object_or_404(Organization, id=org_id)
+    if(not(user.has_perm(org.get_user_perm()))):
+        raise PermissionDenied()
+    return org
 
+def user_has_admin_perms(user, org_id):
+    org = get_object_or_404(Organization, id=org_id)
+    if(not(user.has_perm(org.get_admin_perm()))):
+        raise PermissionDenied()
+    return org
 
 # login_url redirects users to the provided url given they are not logged in
 # @login_required is a decorator that says hey this needs login
@@ -56,20 +66,17 @@ def create_org(request):
 
     return render(request, "organization/create_org.html", {'form': form})
 
-@login_required
+@login_required()
 def org_view(request, org_id):
-    org = get_object_or_404(Organization, id=org_id)
-    if(not(request.user.has_perm(org.get_user_perm()))):
-        raise PermissionDenied()
+    org = user_has_user_perms(request.user, org_id)
     context = {"org": org}
     return render(request, "organization/org_view.html", context)
 
-@login_required
+@login_required()
 def user_orgs(request):
 
     # get all organizations to filter through
     organizations = Organization.objects.all()
-
     user_orgs = []
 
     for org in organizations:
@@ -77,3 +84,24 @@ def user_orgs(request):
             user_orgs.append(org)
     context = {"orgs": user_orgs}
     return render(request, "organization/index.html", context)
+
+@login_required()
+def admin_index(request, org_id):
+    org = user_has_admin_perms(request.user, org_id)
+    context = {"org": org}
+    return render(request, "organization/admin/index.html", context)
+
+def set_join_code(request, org_id):
+    org = user_has_admin_perms(request.user, org_id)
+
+    if request.method == "POST":
+        form = JoinCodeForm(request.POST, instance=org)
+        if form.is_valid():
+            org = form.save(commit=False)
+            org.save()
+            return redirect('organization:admin_index', org_id=org_id)
+    else:
+        form = JoinCodeForm(instance=org)
+    
+    context = {"org": org, "form": form}
+    return render(request, "organization/admin/set_join_code.html", context)
