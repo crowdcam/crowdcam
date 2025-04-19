@@ -149,3 +149,7 @@ def manage_users(request, org_id):
         "org_id": org_id, 
     }
     return render(request, "organization/admin/manage_users.html", context)
+
+def manage_user(request, org_id, user_id):
+    org = user_has_admin_perms(request.user, org_id)
+    return render(request, "organization/admin/user.html")

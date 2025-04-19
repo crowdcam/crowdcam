@@ -3,6 +3,10 @@
 {% block content %}
 <!-- Main content goes here-->
 
+{% if err %}
+<h3>{{err}}</h3>
+{% endif %}
+
 {% if users %}
 <table>
     <thead>
@@ -12,6 +16,7 @@
             <th>User?</th>
             <th>Moderator?</th>
             <th>Admin?</th>
+            <th>Edit</th>
         </tr>
 
     </thead>
@@ -23,6 +28,7 @@
         <td>{{ user.is_user }}</td>
         <td>{{ user.is_mod }}</td>
         <td>{{ user.is_admin }}</td>
+        <td><a href="{% url 'organization:manage_user' org_id user.user.id %}">Edit User</a></td>
     </tr>
 
     {% endfor %}
