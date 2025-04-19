@@ -1,0 +1,37 @@
+{% extends "crowd_app/main_page_template.html" %}
+{% block title%}Manage Org Users{% endblock%}
+{% block content %}
+<!-- Main content goes here-->
+
+{% if users %}
+<table>
+    <thead>
+        <tr>
+            <th>User ID</th>
+            <th>Username</th>
+            <th>User?</th>
+            <th>Moderator?</th>
+            <th>Admin?</th>
+        </tr>
+
+    </thead>
+<tbody>
+    {% for user in users %}
+    <tr>
+        <td>{{ user.user.id }}</td>
+        <td>{{ user.user.username }}</td>
+        <td>{{ user.is_user }}</td>
+        <td>{{ user.is_mod }}</td>
+        <td>{{ user.is_admin }}</td>
+    </tr>
+
+    {% endfor %}
+</tbody>
+</table>
+
+{% else %}
+<p>No users were found</p>
+{% endif %}
+
+<!-- End of content variable-->
+{% endblock %}

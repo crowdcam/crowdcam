@@ -130,3 +130,22 @@ def join_org(request):
     
     context = {"form": form}
     return render(request, "organization/join_org.html", context)
+
+@login_required()
+def manage_users(request, org_id):
+    org = user_has_admin_perms(request.user, org_id)
+    group = Group.objects.get(name=org.get_user_group())
+    users = group.user_set.all()
+    user_permissions = []
+    for user in users:
+        user_permissions.append({
+            "user": user,
+            "is_user": user.has_perm('user', org),
+            "is_mod": user.has_perm('mod', org),
+            "is_admin": user.has_perm('admin', org),
+        })
+    context = {
+        "users": user_permissions, 
+        "org_id": org_id, 
+    }
+    return render(request, "organization/admin/manage_users.html", context)
