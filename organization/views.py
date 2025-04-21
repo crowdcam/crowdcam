@@ -65,7 +65,18 @@ def user_orgs(request):
 
     # get all organizations to filter through
     user_orgs = get_objects_for_user(request.user, 'organization.user')
-    context = {"orgs": user_orgs}
+
+    org_permissions = []
+    for org in user_orgs:
+        org_permissions.append({
+            "org": org,
+            "is_user": request.user.has_perm('user', org),
+            "is_mod": request.user.has_perm('mod', org),
+            "is_admin": request.user.has_perm('admin', org),
+        })
+    context = {
+        "orgs": org_permissions
+    }
     return render(request, "organization/index.html", context)
 
 @login_required()

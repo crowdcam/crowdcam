@@ -7,11 +7,19 @@
         
     {% for org in orgs %}
                 
-        ID: {{org.id}}
+        ID: {{org.org.id}}
         <br>
-        Name: {{ org.name }}<br>
+        Name: {{ org.org.name }}<br>
                 
-        <a href="{% url 'organization:org_view' org.id %}">{{org.name}}</a>
+        <a href="{% url 'organization:org_view' org.org.id %}">{{org.org.name}}</a>
+
+        {% if org.is_mod %}
+            <p>Mod Placeholder</p>
+        {% endif %}
+
+        {% if org.is_admin %}
+            <a href="{% url 'organization:admin_index' org.org.id %}">Admin Page</a>
+        {% endif %}
         <br>
         <br>
     {% endfor %}
