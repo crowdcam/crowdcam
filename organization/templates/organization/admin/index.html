@@ -3,11 +3,18 @@
 {% block content %}
 <!-- Main content goes here-->
 
+{% if msg%}
+<p>{{msg}}</p>
+{% endif %}
+
 {% if org %}
     <h1>Welcome admin!</h1>       
     ID: {{org.id}}
     <br>
     Name: {{ org.name }}<br>
+    Current Join Code: {{ org.join_code }}<br>
+    Accepting Users: {{ org.accepting_users }}<br>
+    <a href="{% url 'organization:set_join_code' org.id %}">Set Join Code</a>
 
 {% endif %}
 
