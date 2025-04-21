@@ -57,7 +57,12 @@ def create_org(request):
 @login_required()
 def org_view(request, org_id):
     org = user_has_user_perms(request.user, org_id)
-    context = {"org": org}
+    context = {
+        "org": org,             
+        "is_user": request.user.has_perm('user', org),
+        "is_mod": request.user.has_perm('mod', org),
+        "is_admin": request.user.has_perm('admin', org),
+    }
     return render(request, "organization/org_view.html", context)
 
 @login_required()
