@@ -53,7 +53,7 @@ INSTALLED_APPS = [
     "users",
     "crowdcam_server",
     "organization"
-]
+    "mod_wsgi.server",
 
 if(not(DEBUG)):
     INSTALLED_APPS.append("mod_wsgi.server")
