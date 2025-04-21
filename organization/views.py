@@ -1,7 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.models import Group, Permission
-from django.contrib.contenttypes.models import ContentType
+from django.contrib.auth.models import Group, User
 from django.core.exceptions import PermissionDenied
 from .models import Organization
 from .forms import OrganizationForm, JoinCodeForm, JoinCodeSubmit
@@ -152,4 +151,12 @@ def manage_users(request, org_id):
 
 def manage_user(request, org_id, user_id):
     org = user_has_admin_perms(request.user, org_id)
-    return render(request, "organization/admin/user.html")
+
+    # get the user by ID
+    user = get_object_or_404(User, id=user_id)
+
+    # ensure that the user is a member of the org
+    user_has_user_perms(user, org_id)
+    context = {"org": org, "user": user}
+    
+    return render(request, "organization/admin/user.html", context)
