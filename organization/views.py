@@ -168,31 +168,37 @@ def manage_users(request, org_id):
 def manage_user(request, org_id, user_id):
     org = user_has_admin_perms(request.user, org_id)
     user = get_object_or_404(User, id=user_id)
-    context = {"org": org, "user": user}
+    context = {"org": org, "user": user, "org_id": org_id}
     if request.method == "POST":
         form = UpdateUser(request.POST)
 
         if (form.is_valid()):
+
+            # get each group and add/remove based on role
             user_group = Group.objects.get(name=org.get_user_group())
             mod_group = Group.objects.get(name=org.get_mod_group())
             admin_group = Group.objects.get(name=org.get_admin_group())
-            user.groups.remove(user_group)
-            user.groups.remove(mod_group)
-            user.groups.remove(admin_group)
-            
-            
 
             if(form.cleaned_data["permissions"] == 'admin'):
                 user.groups.add(user_group)
                 user.groups.add(mod_group)
                 user.groups.add(admin_group)
+                
             elif(form.cleaned_data["permissions"] == 'mod'):
                 user.groups.add(user_group)
                 user.groups.add(mod_group)
+                user.groups.remove(admin_group)
+                
             elif(form.cleaned_data["permissions"] == 'user'):
+                user.groups.remove(mod_group)
+                user.groups.remove(admin_group)
                 user.groups.add(user_group)
+                
             elif(form.cleaned_data["permissions"] == 'none'):
                 # while removing groups should suffice, this ensures their removal
+                user.groups.remove(user_group)
+                user.groups.remove(mod_group)
+                user.groups.remove(admin_group)
                 remove_perm('user', user, org)
                 
             context["msg"] = "Updated User!"
