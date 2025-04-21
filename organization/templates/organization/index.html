@@ -3,6 +3,7 @@
 {% block content %}
 <!-- Main content goes here-->
 
+<a href="{% url 'organization:join_org' %}">Join a new org</a>
 {% if orgs %}
         
     {% for org in orgs %}

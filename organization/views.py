@@ -3,8 +3,8 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import Group, User
 from django.core.exceptions import PermissionDenied
 from .models import Organization
-from .forms import OrganizationForm, JoinCodeForm, JoinCodeSubmit
-from guardian.shortcuts import assign_perm, get_objects_for_user
+from .forms import OrganizationForm, JoinCodeForm, JoinCodeSubmit, UpdateUser
+from guardian.shortcuts import assign_perm, get_objects_for_user, remove_perm
 
 def user_has_user_perms(user, org_id):
     org = get_object_or_404(Organization, id=org_id)
@@ -167,12 +167,45 @@ def manage_users(request, org_id):
 
 def manage_user(request, org_id, user_id):
     org = user_has_admin_perms(request.user, org_id)
-
-    # get the user by ID
     user = get_object_or_404(User, id=user_id)
-
-    # ensure that the user is a member of the org
-    user_has_user_perms(user, org_id)
     context = {"org": org, "user": user}
+    if request.method == "POST":
+        form = UpdateUser(request.POST)
+
+        if (form.is_valid()):
+            remove_perm('user', user, org)
+            remove_perm('mod', user, org)
+            remove_perm('admin', user, org)
+
+            if(form.cleaned_data["permissions"] == 'admin'):
+                assign_perm('admin', user, org)
+                assign_perm('mod', user, org)
+                assign_perm('user', user, org)
+            elif(form.cleaned_data["permissions"] == 'mod'):
+                assign_perm('mod', user, org)
+                assign_perm('user', user, org)
+            elif(form.cleaned_data["permissions"] == 'user'):
+                assign_perm('user', user, org)
+            elif(form.cleaned_data["permissions"] == 'none'):
+                remove_perm('user', user, org)
+            context["msg"] = "Updated User!"
+        else:
+            context["msg"] = "Something went wrong..."
+    # get the user by ID
+
+    # find the max perms for a given user
+    if user.has_perm('admin', org):
+        max_perms = 'admin'
+    elif user.has_perm('mod', org):
+        max_perms = 'mod'
+    elif user.has_perm('user', org):
+        max_perms = 'user'
+    else:
+        max_perms = 'none'
+        context["user"] = None
+        
+    form = UpdateUser(initial={'permissions': max_perms})
+    context["form"] = form
+    context["perms"] = max_perms
     
     return render(request, "organization/admin/user.html", context)

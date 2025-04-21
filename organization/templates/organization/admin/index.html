@@ -14,7 +14,8 @@
     Name: {{ org.name }}<br>
     Current Join Code: {{ org.join_code }}<br>
     Accepting Users: {{ org.accepting_users }}<br>
-    <a href="{% url 'organization:set_join_code' org.id %}">Set Join Code</a>
+    <a href="{% url 'organization:set_join_code' org.id %}">Set Join Code</a><br>
+    <a href="{% url 'organization:manage_users' org.id %}">Manage Users</a>
 
 {% endif %}
 

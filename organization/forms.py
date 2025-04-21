@@ -14,3 +14,12 @@ class JoinCodeForm(forms.ModelForm):
 
 class JoinCodeSubmit(forms.Form):
     input_code = forms.CharField(label="Join Code", max_length=20)
+
+class UpdateUser(forms.Form):
+    choices = [
+        ('none', "DELETE USER"),
+        ('user',"User Permissions"),
+        ('mod', "Moderator Permissions"),
+        ('admin', "Admin Permissions")
+    ]
+    permissions = forms.ChoiceField(choices=choices, required=True)
