@@ -101,8 +101,6 @@ def set_join_code(request, org_id):
         form = JoinCodeForm(request.POST, instance=org)
         if form.is_valid():
 
-
-            # TODO: Check for duplicate join codes from other orgs
             org_list = Organization.objects.all()
             duplicates = False
             for org in org_list:
