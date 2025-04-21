@@ -2,9 +2,12 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import Group, User
 from django.core.exceptions import PermissionDenied
+from django.http import HttpResponse
 from .models import Organization
 from .forms import OrganizationForm, JoinCodeForm, JoinCodeSubmit, UpdateUser
 from guardian.shortcuts import assign_perm, get_objects_for_user, remove_perm
+import csv
+from io import BytesIO
 
 def user_has_user_perms(user, org_id):
     org = get_object_or_404(Organization, id=org_id)
@@ -165,6 +168,7 @@ def manage_users(request, org_id):
     }
     return render(request, "organization/admin/manage_users.html", context)
 
+@login_required()
 def manage_user(request, org_id, user_id):
     org = user_has_admin_perms(request.user, org_id)
     user = get_object_or_404(User, id=user_id)
@@ -222,3 +226,32 @@ def manage_user(request, org_id, user_id):
     context["perms"] = max_perms
     
     return render(request, "organization/admin/user.html", context)
+
+@login_required()
+def download_users(request, org_id):
+    org = user_has_admin_perms(request.user, org_id)
+
+    # Find all of the users in the org.get_user_group()
+    user_group = Group.objects.get(name=org.get_user_group())
+    users = user_group.user_set.all()
+
+    response = HttpResponse(
+        content_type="text/csv",
+        headers={"Content-Disposition": f'attachment; filename="{org.name}-users.csv"'},
+    )
+    
+    # Create a CSV writer
+    csv_writer = csv.writer(response)
+    csv_writer.writerow(['ID', 'Username', 'User', 'Mod', 'Admin'])
+
+    # Write their id, username, user, mod, admin to the CSV file
+    for user in users:
+        csv_writer.writerow([
+            user.id,
+            user.username,
+            user.has_perm('user', org),
+            user.has_perm('mod', org),
+            user.has_perm('admin', org),
+        ])
+
+    return response
