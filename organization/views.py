@@ -173,21 +173,28 @@ def manage_user(request, org_id, user_id):
         form = UpdateUser(request.POST)
 
         if (form.is_valid()):
-            remove_perm('user', user, org)
-            remove_perm('mod', user, org)
-            remove_perm('admin', user, org)
+            user_group = Group.objects.get(name=org.get_user_group())
+            mod_group = Group.objects.get(name=org.get_mod_group())
+            admin_group = Group.objects.get(name=org.get_admin_group())
+            user.groups.remove(user_group)
+            user.groups.remove(mod_group)
+            user.groups.remove(admin_group)
+            
+            
 
             if(form.cleaned_data["permissions"] == 'admin'):
-                assign_perm('admin', user, org)
-                assign_perm('mod', user, org)
-                assign_perm('user', user, org)
+                user.groups.add(user_group)
+                user.groups.add(mod_group)
+                user.groups.add(admin_group)
             elif(form.cleaned_data["permissions"] == 'mod'):
-                assign_perm('mod', user, org)
-                assign_perm('user', user, org)
+                user.groups.add(user_group)
+                user.groups.add(mod_group)
             elif(form.cleaned_data["permissions"] == 'user'):
-                assign_perm('user', user, org)
+                user.groups.add(user_group)
             elif(form.cleaned_data["permissions"] == 'none'):
+                # while removing groups should suffice, this ensures their removal
                 remove_perm('user', user, org)
+                
             context["msg"] = "Updated User!"
         else:
             context["msg"] = "Something went wrong..."
