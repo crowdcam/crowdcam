@@ -1,0 +1,24 @@
+{% extends "crowd_app/main_page_template.html" %}
+{% block title%}Your Orgs{% endblock%}
+{% block content %}
+<!-- Main content goes here-->
+
+{% if orgs %}
+        
+    {% for org in orgs %}
+                
+        ID: {{org.id}}
+        <br>
+        Name: {{ org.name }}<br>
+                
+        <a href="{% url 'organization:org_view' org.id %}">{{org.name}}</a>
+        <br>
+        <br>
+    {% endfor %}
+        
+{% else %}
+<p>No orgs found</p>
+{% endif %}
+
+<!-- End of content variable-->
+{% endblock %}
