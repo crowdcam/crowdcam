@@ -3,9 +3,6 @@
   "waitFor": "onCreateCommand",
   "updateContentCommand": "pip install -r requirements.txt && python manage.py migrate",
   "postCreateCommand": "cp .env.example .env",
-  "postAttachCommand": {
-    "server": "python manage.py runserver"
-  },
   "customizations": {
     "vscode": {
       "extensions": [

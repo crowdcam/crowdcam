@@ -15,7 +15,7 @@ def register_user(request):
             new_user = form.save()
 
             # login as new user
-            login(request, new_user)
+            login(request, new_user, backend='django.contrib.auth.backends.ModelBackend')
             
             # redirect to app_name:name_of_page
             return redirect("crowd_app:media_index")
@@ -31,7 +31,7 @@ def user_login(request):
     if(request.method == "POST"):
         form = AuthenticationForm(data=request.POST)
         if(form.is_valid()):
-            login(request, form.get_user())
+            login(request, form.get_user(), backend='django.contrib.auth.backends.ModelBackend')
 
             # check if any "next" redirect was given
             # field in template was named "next"

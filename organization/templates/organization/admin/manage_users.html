@@ -1,0 +1,44 @@
+{% extends "crowd_app/main_page_template.html" %}
+{% block title%}Manage Org Users{% endblock%}
+{% block content %}
+<!-- Main content goes here-->
+
+{% if err %}
+<h3>{{err}}</h3>
+{% endif %}
+
+{% if users %}
+<table>
+    <thead>
+        <tr>
+            <th>User ID</th>
+            <th>Username</th>
+            <th>User?</th>
+            <th>Moderator?</th>
+            <th>Admin?</th>
+            <th>Edit</th>
+        </tr>
+
+    </thead>
+<tbody>
+    {% for user in users %}
+    <tr>
+        <td>{{ user.user.id }}</td>
+        <td>{{ user.user.username }}</td>
+        <td>{{ user.is_user }}</td>
+        <td>{{ user.is_mod }}</td>
+        <td>{{ user.is_admin }}</td>
+        <td><a href="{% url 'organization:manage_user' org_id user.user.id %}">Edit User</a></td>
+    </tr>
+
+    {% endfor %}
+</tbody>
+</table>
+
+<a href="{% url 'organization:download_users' org_id %}">Download All Users</a>
+{% else %}
+<p>No users were found</p>
+{% endif %}
+
+<!-- End of content variable-->
+{% endblock %}
