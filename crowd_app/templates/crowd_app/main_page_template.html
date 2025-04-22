@@ -23,7 +23,8 @@
             <li><a href="{% url 'crowd_app:media_index' %}">Media</a></li>
             {% if user.is_authenticated %}
             <li><a href="{% url 'crowd_app:upload' %}">Upload</a></li>
-            <li><a href="{% url 'organization:user_orgs' %}">Your Orgs</a></li>
+            <li><a href="{% url 'organization:user_orgs' %}">{{ user.username }}'s Orgs</a></li>
+            <li><a href="{% url 'organization:join_org' %}">Join an Org</a></li>
             <li><a href="{% url 'organization:create_org' %}">Create a new Org</a></li>
             {% endif %}
         </ul>
@@ -32,6 +33,7 @@
             <li><a href="{% url 'users:create_user' %}">Create an account</a></li>
             <li><a href="{% url 'users:login' %}">Login</a></li>
             {% else %}
+            <li>Welcome {{ user.username}}!</li>
           <li><a href="{% url 'users:logout' %}">Logout</a></li>
             {% endif %}
         </ul>

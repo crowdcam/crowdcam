@@ -35,7 +35,13 @@
 </tbody>
 </table>
 
-<a href="{% url 'organization:download_users' org_id %}">Download All Users</a>
+<form method="get" action="{% url 'organization:download_users' org_id %}">
+    <button type="submit">Download All Users</button>
+</form>
+
+<form method="get" action="{% url 'organization:admin_index' org_id %}">
+    <button type="submit">Return to Admin Page</button>
+</form>
 {% else %}
 <p>No users were found</p>
 {% endif %}

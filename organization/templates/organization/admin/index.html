@@ -9,13 +9,15 @@
 
 {% if org %}
     <h1>Welcome admin!</h1>       
-    ID: {{org.id}}
-    <br>
-    Name: {{ org.name }}<br>
-    Current Join Code: {{ org.join_code }}<br>
-    Accepting Users: {{ org.accepting_users }}<br>
-    <a href="{% url 'organization:set_join_code' org.id %}">Set Join Code</a><br>
-    <a href="{% url 'organization:manage_users' org.id %}">Manage Users</a>
+    <h2>Currently Viewing for {{ org.name }}</h2>
+    <h3>Current Join Code: <em>{{ org.join_code }}</em></h3>
+    <h3>Accepting Users: {{ org.accepting_users }}<br></h3>
+    <form action="{% url 'organization:set_join_code' org.id %}" method="get" style="display:inline;">
+        <button type="submit">Set Join Code</button>
+    </form>
+    <form action="{% url 'organization:manage_users' org.id %}" method="get" style="display:inline;">
+        <button type="submit">Manage Users</button>
+    </form>
 
 {% endif %}
 
