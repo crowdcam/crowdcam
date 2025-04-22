@@ -1,0 +1,31 @@
+{% extends "crowd_app/main_page_template.html" %}
+{% block title%}Manage User{% endblock%}
+{% block content %}
+<!-- Main content goes here-->
+
+{% if err %}
+<h3>{{err}}</h3>
+{% endif %}
+
+{% if user %}
+<h2>Update a user in your org</h2>
+
+{% if msg %}
+<h3>{{msg}}</h3>
+{% endif %}
+
+
+<h3>User ID: {{ user.id }}</h3>
+<h3>Username: {{ user.username }}</h3>
+<h3>Current Permissions: {{ perms }}</h3>
+<form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Update User</button>
+</form>
+{% else %}
+<h2>User is not a member of your org</h2>
+{% endif %}
+<a href="{% url 'organization:manage_users' org_id %}">Return to Manage Users</a>
+<!-- End of content variable-->
+{% endblock %}

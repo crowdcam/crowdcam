@@ -52,9 +52,10 @@ INSTALLED_APPS = [
     "crowd_app",
     "users",
     "crowdcam_server",
-    "organization"
+    "organization",
+    "guardian"
     "mod_wsgi.server",
-
+    ]
 if(not(DEBUG)):
     INSTALLED_APPS.append("mod_wsgi.server")
 
@@ -69,6 +70,11 @@ MIDDLEWARE = [
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
+
+AUTHENTICATION_BACKENDS = (
+    'django.contrib.auth.backends.ModelBackend',
+    'guardian.backends.ObjectPermissionBackend',
+)
 
 ROOT_URLCONF = "crowdcam_server.urls"
 
