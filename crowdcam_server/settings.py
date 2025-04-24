@@ -56,7 +56,6 @@ INSTALLED_APPS = [
     "organization",
     "guardian",
 ]
-
 if(not(DEBUG)):
     INSTALLED_APPS.append("mod_wsgi.server")
 
