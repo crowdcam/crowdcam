@@ -50,10 +50,11 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "crowd_app",
+    "media_app",
     "users",
     "crowdcam_server",
     "organization",
-    "guardian"
+    "guardian",
 ]
 
 if(not(DEBUG)):
@@ -89,6 +90,7 @@ TEMPLATES = [
                 "django.template.context_processors.request",
                 "django.contrib.auth.context_processors.auth",
                 "django.contrib.messages.context_processors.messages",
+                'organization.context_processors.user_organizations',
             ],
         },
     },

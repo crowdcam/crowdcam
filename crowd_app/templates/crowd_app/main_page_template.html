@@ -20,12 +20,23 @@
 
     <nav>
         <ul class="nav-left">
-            <li><a href="{% url 'crowd_app:media_index' %}">Media</a></li>
             {% if user.is_authenticated %}
-            <li><a href="{% url 'crowd_app:upload' %}">Upload</a></li>
-            <li><a href="{% url 'organization:user_orgs' %}">{{ user.username }}'s Orgs</a></li>
-            <li><a href="{% url 'organization:join_org' %}">Join an Org</a></li>
-            <li><a href="{% url 'organization:create_org' %}">Create a new Org</a></li>
+                <li class="dropdown">
+                    <a class="dropbtn" href="#" onclick="dropdownFunction()">Organizations</a>
+                    <ul id="dropdown" class="dropdown-content">
+                        {% for org in user_orgs %}
+                            <li class="dropdown-submenu">
+                                <a href="#">{{ org.name }}</a>
+                                <ul class="sub-dropdown">
+                                    <li><a href="{% url 'media_app:media_index' org.slug %}">View Media</a></li>
+                                    <li><a href="{% url 'media_app:upload' org.slug %}">Upload Image</a></li>
+                                </ul>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </li>
+                <li><a href="{% url 'organization:user_orgs' %}">Your Orgs</a></li>
+                <li><a href="{% url 'organization:create_org' %}">Create a new Org</a></li>
             {% endif %}
         </ul>
         <ul class="nav-right">
@@ -33,7 +44,6 @@
             <li><a href="{% url 'users:create_user' %}">Create an account</a></li>
             <li><a href="{% url 'users:login' %}">Login</a></li>
             {% else %}
-            <li>Welcome {{ user.username}}!</li>
           <li><a href="{% url 'users:logout' %}">Logout</a></li>
             {% endif %}
         </ul>
@@ -49,8 +59,5 @@
     <footer>
         © 2025 CrowdCam · For educational purposes only.
     </footer>
-    
-
 </body>
-
 </html>

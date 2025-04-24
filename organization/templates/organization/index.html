@@ -3,6 +3,7 @@
 {% block content %}
 <!-- Main content goes here-->
 
+<a class="btn-back" href="{% url 'organization:join_org' %}">Join a new org</a><br>
 {% if orgs %}
     {% for org in orgs %}
                 
@@ -24,6 +25,17 @@
                 {% endif %}
                 </ul>
                 
+        <a class="btn-back" href="{% url 'organization:org_view' org.org.id %}">{{org.org.name}}</a>
+
+        {% if org.is_mod %}
+            <p>Mod Placeholder</p>
+        {% endif %}
+
+        {% if org.is_admin %}
+            <a class="btn-back" href="{% url 'organization:admin_index' org.org.id %}">Admin Page</a>
+        {% endif %}
+        <br>
+        <br>
             </div>
         </div>
 
