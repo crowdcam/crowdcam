@@ -112,7 +112,7 @@ form label {
 }
 
 /* Buttons */
-form button {
+form button, .btn {
     display: inline-block;
     background-color: #35b2d8;
     color: white;
@@ -127,6 +127,16 @@ form button {
 
 form button:hover {
     background-color: #2c9abe;
+}
+
+.errorlist {
+    display: table; /* keep the background color wrapped tight */
+    padding:5px;
+    background-color:#E9E9ED;
+    color:#c11919;
+    list-style: none;
+    font-weight: bold;
+
 }
 
 .btn-back {
@@ -147,6 +157,92 @@ form button:hover {
     background-color: #35b2d8;
     color: white;
     text-decoration: none;
+}
+
+.btn-delete {
+    display: inline-block;
+    font-size: 16px;
+    color: #c11919;
+    background-color: transparent;
+    border: 2px solid #c11919;
+    padding: 8px 16px;
+    border-radius: 6px;
+    text-decoration: none;
+    font-weight: 600;
+    transition: all 0.2s ease-in-out;
+    cursor: pointer;
+}
+
+.btn-delete:hover {
+    background-color: #c11919;
+    color: white;
+    text-decoration: none;
+}
+
+/* dropdown css */
+/* Main dropdown */
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.dropdown > a {
+    color: white;
+    padding: 10px;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #606060;
+    min-width: 200px;
+    z-index: 1000;
+    padding: 0;
+}
+
+.dropdown-content li {
+    position: relative;
+    list-style: none;
+}
+
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+/* Submenu (each org) */
+.dropdown-submenu > a {
+    padding: 10px;
+    color: white;
+    display: block;
+    text-decoration: none;
+    background-color: #606060;
+}
+
+.dropdown-submenu:hover > .sub-dropdown {
+    display: block;
+}
+
+.sub-dropdown {
+    display: none;
+    position: absolute;
+    left: 100%;
+    top: 0;
+    background-color: #707070;
+    min-width: 150px;
+    z-index: 1001;
+}
+
+.sub-dropdown li a {
+    display: block;
+    padding: 8px 12px;
+    color: white;
+    text-decoration: none;
+}
+
+.sub-dropdown li a:hover {
+    background-color: #4a4a4a;
 }
 
 /* Footer */

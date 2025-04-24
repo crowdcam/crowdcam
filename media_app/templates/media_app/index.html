@@ -1,8 +1,8 @@
 {% extends "crowd_app/main_page_template.html" %}
-{% block title%}Upload Media{% endblock%}
+{% block title%}View Media{% endblock%}
 {% block content %}
 <!-- Main content goes here-->
-
+<a href="{% url 'media_app:upload' org.slug %}" class="btn-back">Upload New Image</a><br>
 {% if media_list %}
         
                 {% for media in media_list %}
@@ -15,7 +15,7 @@
                         Status: {{ media.status }}<br>
                         Created: {{ media.created }}<br>
                 
-                <a href="{% url 'crowd_app:media_view' media.id %}"><img src="{{ media.media_path.url }}" style="max-width: 256px;"></a>
+                <a href="{% url 'media_app:media_view' org.slug media.id %}"><img src="{{ media.media_path.url }}" style="max-width: 256px;"></a>
                 <br>
                 <br>
                 {% endfor %}
