@@ -18,7 +18,7 @@ def register_user(request):
             login(request, new_user, backend='django.contrib.auth.backends.ModelBackend')
             
             # redirect to app_name:name_of_page
-            return redirect("crowd_app:media_index")
+            return redirect("crowd_app:home")
         
     else: 
         form = UserCreationForm()
@@ -38,7 +38,7 @@ def user_login(request):
             if("next" in request.POST):
                 return redirect(request.POST.get("next"))
             
-            return redirect("crowd_app:media_index")
+            return redirect("crowd_app:home")
     else:
         form = AuthenticationForm()
     context = {"form": form}

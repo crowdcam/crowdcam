@@ -1,4 +1,5 @@
 from django.db import models
+from django.template.defaultfilters import slugify
 
 # Create your models here.
 class Organization(models.Model):
@@ -6,6 +7,7 @@ class Organization(models.Model):
     name = models.CharField(max_length=255)
     join_code = models.CharField(max_length=20, null=True)
     accepting_users = models.BooleanField(default=False)
+    slug = models.SlugField(max_length=255, unique=True, blank=True)
 
 
     class Meta:
@@ -25,3 +27,9 @@ class Organization(models.Model):
 
     def get_admin_group(self):
         return self.name + "_admin"
+    
+    # redefine save() because we need to make a slug
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            self.slug = slugify(self.name)
+        super().save(*args, **kwargs)

@@ -9,6 +9,6 @@
     {{ form.as_p }}
     <button type="submit">Upload</button>
 </form>
-<a href="" class="btn-back">Back to Media List</a>
+<a href="{% url 'media_app:media_index' org.slug %}" class="btn-back">Back to Media List</a>
 <!-- End of content variable-->
 {% endblock %}

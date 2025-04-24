@@ -117,7 +117,7 @@ def set_join_code(request, org_id):
     else:
         form = JoinCodeForm(instance=org)
     
-    context = {"org": org, "form": form}
+    context = {"org": org, "form": form, "org_id": org_id}
     return render(request, "organization/admin/set_join_code.html", context)
 
 @login_required()

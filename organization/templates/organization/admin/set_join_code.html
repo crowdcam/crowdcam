@@ -12,5 +12,9 @@
     {{ form.as_p }}
     <button type="submit">Set Join Code</button>
 </form>
+
+<form action="{% url 'organization:admin_index' org_id %}" method="get" style="display: inline;">
+    <button type="submit">Back to Admin Index</button>
+</form>
 <!-- End of content variable-->
 {% endblock %}
