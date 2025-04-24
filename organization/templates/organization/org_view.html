@@ -4,9 +4,7 @@
 <!-- Main content goes here-->
 
 {% if org %}
-<h1>Org ID: {{org.id}}</h1>
-
-Name: {{org.name}}
+<h1>Welcome to {{org.name}}</h1>
 <br>
 
 {% if is_mod %}
@@ -14,7 +12,9 @@ Name: {{org.name}}
 {% endif %}
 
 {% if is_admin %}
-<a href="{% url 'organization:admin_index' org.id %}">Admin Page</a>
+<form action="{% url 'organization:admin_index' org.id %}" method="get">
+    <button type="submit" class="org-admin-link">Admin Page</button>
+</form>
 {% endif %}
 
 {% else %}

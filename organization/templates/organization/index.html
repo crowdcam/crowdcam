@@ -3,30 +3,36 @@
 {% block content %}
 <!-- Main content goes here-->
 
-<a href="{% url 'organization:join_org' %}">Join a new org</a><br>
 {% if orgs %}
-        
     {% for org in orgs %}
                 
-        ID: {{org.org.id}}
-        <br>
-        Name: {{ org.org.name }}<br>
+        <div class="org-card">
+            <h2 class="org-name">
+                <a href="{% url 'organization:org_view' org.org.id %}">{{ org.org.name }}</a>
+            </h2>
+            <div class="org-actions">
+                <ul>
+                {% if org.is_mod %}
+                    <li><a href="#" class="org-mod-link">Moderator Tools</a></li>
+                {% endif %}
+                {% if org.is_admin %}
+                    <li>
+                        <form action="{% url 'organization:admin_index' org.org.id %}" method="get">
+                            <button type="submit" class="org-admin-link">Admin Page</button>
+                        </form>
+                    </li>
+                {% endif %}
+                </ul>
                 
-        <a href="{% url 'organization:org_view' org.org.id %}">{{org.org.name}}</a>
+            </div>
+        </div>
 
-        {% if org.is_mod %}
-            <p>Mod Placeholder</p>
-        {% endif %}
-
-        {% if org.is_admin %}
-            <a href="{% url 'organization:admin_index' org.org.id %}">Admin Page</a>
-        {% endif %}
-        <br>
-        <br>
     {% endfor %}
-        
+<form action="{% url 'organization:join_org' %}" method="get">
+    <button type="submit">Join A New Org</button>
+</form>
 {% else %}
-<p>No orgs found</p>
+<p>No orgs found, <a href="{% url 'organization:join_org' %}">join one today!</a></p>
 {% endif %}
 
 <!-- End of content variable-->
