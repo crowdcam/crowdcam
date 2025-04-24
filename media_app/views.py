@@ -30,7 +30,8 @@ def media_view(request, org_slug, media_id):
 
     context = {
         "media": media,
-        "org": org
+        "org": org, 
+        'is_mod': request.user.has_perm('mod', org)
     }
     return render(request, "media_app/view.html", context)
 
@@ -64,8 +65,7 @@ def upload(request, org_slug):
             return redirect(reverse('media_app:media_index', args=[org_slug]))
     else:
         form = MediaForm()
-
-    return render(request, "media_app/upload.html", {'form': form, 'org': org, 'is_mod': request.user.has_perm('mod', org)})
+    return render(request, "media_app/upload.html", {'form': form, 'org': org})
 
 @login_required()
 def delete_media(request, org_slug, media_id):
