@@ -6,7 +6,7 @@ from organization.models import Organization
 from .forms import MediaForm
 
 # Create your views here.
-
+@login_required()
 def media_index(request, org_slug):
     media_list = Media.objects.order_by("-created")
     org = get_object_or_404(Organization, slug=org_slug)
@@ -20,7 +20,7 @@ def media_index(request, org_slug):
     }
     return render(request, "media_app/index.html", context)
 
-
+@login_required()
 def media_view(request, org_slug, media_id):
     org = get_object_or_404(Organization, slug=org_slug)
 
@@ -64,6 +64,7 @@ def upload(request, org_slug):
 
     return render(request, "media_app/upload.html", {'form': form, 'org': org})
 
+@login_required()
 def delete_media(request, org_slug, media_id):
     media = get_object_or_404(Media, id=media_id)
 
