@@ -8,18 +8,8 @@ from .forms import OrganizationForm, JoinCodeForm, JoinCodeSubmit, UpdateUser
 from guardian.shortcuts import assign_perm, get_objects_for_user, remove_perm
 import csv
 from io import BytesIO
+from .utils import user_has_admin_perms, user_has_user_perms
 
-def user_has_user_perms(user, org_id):
-    org = get_object_or_404(Organization, id=org_id)
-    if(not(user.has_perm('user', org))):
-        raise PermissionDenied()
-    return org
-
-def user_has_admin_perms(user, org_id):
-    org = get_object_or_404(Organization, id=org_id)
-    if(not(user.has_perm('admin', org))):
-        raise PermissionDenied()
-    return org
 
 # login_url redirects users to the provided url given they are not logged in
 # @login_required is a decorator that says hey this needs login

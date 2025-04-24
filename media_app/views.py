@@ -3,14 +3,15 @@ from django.contrib.auth.decorators import login_required
 from django.urls import reverse
 from .models import Media
 from organization.models import Organization
+from organization.utils import user_has_mod_perms, user_has_user_perms
 from .forms import MediaForm
 
 # Create your views here.
-
+@login_required()
 def media_index(request, org_slug):
-    media_list = Media.objects.order_by("-created")
     org = get_object_or_404(Organization, slug=org_slug)
-
+    user_has_user_perms(request.user, org.id)
+    
     # Filter media to this organization only
     media_list = Media.objects.filter(organization=org).order_by("-created")
     
@@ -20,15 +21,18 @@ def media_index(request, org_slug):
     }
     return render(request, "media_app/index.html", context)
 
-
+@login_required()
 def media_view(request, org_slug, media_id):
     org = get_object_or_404(Organization, slug=org_slug)
+    user_has_user_perms(request.user, org.id)
 
     media = get_object_or_404(Media, id=media_id, organization=org)
 
+    can_delete = request.user.has_perm('mod', org) or media.user == request.user
     context = {
         "media": media,
-        "org": org
+        "org": org, 
+        'can_delete': can_delete
     }
     return render(request, "media_app/view.html", context)
 
@@ -39,6 +43,7 @@ def media_view(request, org_slug, media_id):
 def upload(request, org_slug):
 
     org = get_object_or_404(Organization, slug=org_slug)
+    user_has_user_perms(request.user, org.id)
 
     if request.method == 'POST':
         form = MediaForm(request.POST, request.FILES)
@@ -61,10 +66,12 @@ def upload(request, org_slug):
             return redirect(reverse('media_app:media_index', args=[org_slug]))
     else:
         form = MediaForm()
-
     return render(request, "media_app/upload.html", {'form': form, 'org': org})
 
+@login_required()
 def delete_media(request, org_slug, media_id):
+    org = get_object_or_404(Organization, slug=org_slug)
+    user_has_mod_perms(request.user, org.id)
     media = get_object_or_404(Media, id=media_id)
 
     media.media_path.delete(save=False)  # Delete the file from disk
