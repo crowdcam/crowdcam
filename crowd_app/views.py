@@ -6,5 +6,4 @@ def index(request):
 
 def error(request, exception):
     context = {"exception": exception}
-    print("Exception:" + str(exception))
     return render(request, "crowd_app/error.html", context)
