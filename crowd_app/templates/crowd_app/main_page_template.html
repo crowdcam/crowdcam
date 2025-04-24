@@ -44,7 +44,6 @@
             <li><a href="{% url 'users:create_user' %}">Create an account</a></li>
             <li><a href="{% url 'users:login' %}">Login</a></li>
             {% else %}
-            <li>Welcome {{user.name}}</li>
           <li><a href="{% url 'users:logout' %}">Logout</a></li>
             {% endif %}
         </ul>
