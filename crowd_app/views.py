@@ -4,5 +4,7 @@ from django.shortcuts import render
 def index(request):
     return render(request, "crowd_app/index.html")
 
-def error(request, execption):
-    return render(request, "crowd_app/error.html")
+def error(request, exception):
+    context = {"exception": exception}
+    print("Exception:" + str(exception))
+    return render(request, "crowd_app/error.html", context)
