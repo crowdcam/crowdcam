@@ -28,10 +28,11 @@ def media_view(request, org_slug, media_id):
 
     media = get_object_or_404(Media, id=media_id, organization=org)
 
+    can_delete = request.user.has_perm('mod', org) or media.user == request.user
     context = {
         "media": media,
         "org": org, 
-        'is_mod': request.user.has_perm('mod', org)
+        'can_delete': can_delete
     }
     return render(request, "media_app/view.html", context)
 
