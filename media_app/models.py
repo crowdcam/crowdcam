@@ -27,5 +27,14 @@ class Media(models.Model):
     def getFileName(self):
         return str(self.media_path).split('/')[-1]
 
+    def getStatus(self):
+        if(self.status is None):
+            return "Awaiting Approval"
+        elif(self.status):
+            return "Approved"
+        else:
+            return "Rejected"
+    
     # we can also turn this file name into a property to make it easier to access
     file_name = property(fget=getFileName)
+    human_status = property(fget=getStatus)

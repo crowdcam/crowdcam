@@ -41,7 +41,6 @@ class MediaReview(forms.ModelForm):
             (True, "Accepted"),
             (False, "Rejected")),
         )
-        
         widgets = {
             "status": widget
         }

@@ -10,7 +10,7 @@
                 Name: {{ pair.media.file_name }}<br>
                 Username: {{ pair.media.user.username }}<br>
                 Organization ID: {{ pair.media.organization_id }}<br>
-                Status: {{ pair.media.status }}<br>
+                Status: {{ pair.media.human_status }}<br>
                 Uploaded: {{ pair.media.created }}<br>
         
                 {% if pair.media.status is None %}
