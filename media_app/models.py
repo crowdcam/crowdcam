@@ -16,7 +16,7 @@ class Media(models.Model):
     organization = models.ForeignKey('organization.Organization', on_delete=models.CASCADE)
     # by default set tag to none, and on delete set tag feild to null
     tag = models.ForeignKey('crowd_app.Tag', on_delete=models.SET_NULL, null=True, blank=True)
-    status = models.BooleanField(default=False)
+    status = models.BooleanField(default=None, null=True)
     # use argurment auto new add to set the time the media was uploaded.
     created = models.DateField(auto_now_add=True)
 
