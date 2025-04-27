@@ -18,6 +18,6 @@ urlpatterns = [
     path("<int:org_id>/mod", views_mod.mod_index, name="mod_index"),
     path("<int:org_id>/mod/review", views_mod.review_all, name="media_review"),
     path("<int:org_id>/mod/review/<str:filter>", views_mod.review_all, name="media_review"),
-    path("<int:org_id>/mod/review/<int:media_id>", views_mod.media_view_change, name="media_view_change"),
+    path("<int:org_id>/mod/review/update/<int:media_id>", views_mod.media_view_change, name="media_view_change"),
 
 ]

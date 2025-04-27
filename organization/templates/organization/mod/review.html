@@ -26,7 +26,7 @@
                 {% else %}
                         <img src="{{ pair.media.media_path.url }}" class="denied">
                 {% endif %}
-                <form method="post" action="{% url 'organization:media_view_change' org.id pair.media.id%}">
+                <form method="post" action="{% url 'organization:media_view_change' org.id pair.media.id %}">
 
                         {% csrf_token %}
                         {{ pair.form.as_p }} 

@@ -31,7 +31,7 @@ def review_all(request, org_id, filter=None):
         form = MediaReview(instance=media)
         media_forms.append({"media": media, "form": form})
 
-    context = {"org": org, "media_forms": media_forms}
+    context = {"org": org, "media_forms": media_forms, "filter": filter}
     return render(request, "organization/mod/review.html", context)
 
 @login_required()
