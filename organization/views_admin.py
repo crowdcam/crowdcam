@@ -133,8 +133,8 @@ def set_join_code(request, org_id):
 
             org_list = Organization.objects.all()
             duplicates = False
-            for org in org_list:
-                if form.cleaned_data["join_code"] == org.join_code and org.id != org_id:
+            for other_org in org_list:
+                if form.cleaned_data["join_code"] == other_org.join_code and other_org.id != org_id:
                     duplicates = True
                     break
             if duplicates:
