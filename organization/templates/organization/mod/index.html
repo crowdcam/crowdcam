@@ -1,0 +1,19 @@
+{% extends "crowd_app/main_page_template.html" %}
+{% block title%}Your Orgs{% endblock%}
+{% block content %}
+<!-- Main content goes here-->
+
+{% if msg %}
+<p>{{msg}}</p>
+{% endif %}
+
+{% if org %}
+    <h1>Welcome mod!</h1>       
+    <h2>Currently Viewing for {{ org.name }}</h2>
+    <h3>Current Join Code: <em>{{ org.join_code }}</em></h3>
+    <h3>Accepting Users: {{ org.accepting_users }}<br></h3>
+
+{% endif %}
+
+<!-- End of content variable-->
+{% endblock %}
