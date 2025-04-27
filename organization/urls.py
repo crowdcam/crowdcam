@@ -1,6 +1,7 @@
 from django.urls import path
 from . import views
 from . import views_admin
+from . import views_mod
 
 app_name = "organization"
 
@@ -13,7 +14,7 @@ urlpatterns = [
     path("<int:org_id>/admin/download", views_admin.download_users, name="download_users"),
     path("<int:org_id>/admin/users", views_admin.manage_users, name="manage_users"),
     path("<int:org_id>/admin/users/<int:user_id>", views_admin.manage_user, name="manage_user"),
-    path("<int:org_id>/admin/join_code", views_admin.set_join_code, name="set_join_code")
-    
-    
+    path("<int:org_id>/admin/join_code", views_admin.set_join_code, name="set_join_code"),
+    path("<int:org_id>/mod", views_mod.mod_index, name="mod_index"),
+
 ]

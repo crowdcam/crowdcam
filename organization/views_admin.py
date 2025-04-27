@@ -6,7 +6,6 @@ from .models import Organization
 from .forms import JoinCodeForm, UpdateUser
 from guardian.shortcuts import remove_perm
 import csv
-from .views_mod import *
 from .utils import user_has_admin_perms
 
 
