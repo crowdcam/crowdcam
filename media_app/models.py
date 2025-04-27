@@ -22,3 +22,10 @@ class Media(models.Model):
 
     def __str__(self):
         return str(self.media_path)
+
+    # Since file name is at the end of the path, extract it and return it
+    def getFileName(self):
+        return str(self.media_path).split('/')[-1]
+
+    # we can also turn this file name into a property to make it easier to access
+    file_name = property(fget=getFileName)
