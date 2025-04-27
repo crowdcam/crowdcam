@@ -37,7 +37,7 @@ class MediaReview(forms.ModelForm):
         model = Media
         fields = ["status"]
         widget = forms.Select(choices=(
-            (None, "Awaiting"),
+            (None, "Awaiting Review"),
             (True, "Accepted"),
             (False, "Rejected")),
         )

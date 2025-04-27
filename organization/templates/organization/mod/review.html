@@ -2,6 +2,12 @@
 {% block title%}Media Review{% endblock%}
 {% block content %}
 <!-- Main content goes here-->
+
+<a class="btn" href="{% url 'organization:media_review' org.id %}">View Queue</a>
+<a class="btn" href="{% url 'organization:media_review' org.id 'approved' %}">View Accepted</a>
+<a class="btn" href="{% url 'organization:media_review' org.id 'rejected'%}">View Rejected</a>
+<a class="btn" href="{% url 'organization:media_review' org.id 'all' %}">View All</a>
+
 {% if media_forms %}
         
         {% for pair in media_forms %}

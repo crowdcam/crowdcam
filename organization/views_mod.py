@@ -13,10 +13,18 @@ def mod_index(request, org_id):
 
 
 @login_required()
-def review_all(request, org_id):
+def review_all(request, org_id, filter=None):
     org = user_has_mod_perms(request.user, org_id)
-    media_list = Media.objects.filter(organization=org).order_by("-created")
 
+    if(filter is None):
+        media_list = Media.objects.filter(organization=org).filter(status=None).order_by("-created")
+    elif(filter == "approved"):
+        media_list = Media.objects.filter(organization=org).filter(status=True).order_by("-created")
+    elif(filter == "all"):
+        media_list = Media.objects.filter(organization=org).order_by("-created")
+    else:
+        media_list = Media.objects.filter(organization=org).filter(status=False).order_by("-created")
+        
     media_forms = []
 
     for media in media_list:
