@@ -13,7 +13,7 @@
     <h3>Current Join Code: <em>{{ org.join_code }}</em></h3>
     <h3>Accepting Users: {{ org.accepting_users }}<br></h3>
     <a class="btn" href="{% url 'organization:set_join_code' org.id %}">Set Join Code</a>
-    <a class="btn" href="{% url 'organization:manage_users' org.id %}">Set Join Code</a>
+    <a class="btn" href="{% url 'organization:manage_users' org.id %}">Manage Users</a>
 {% endif %}
 
 <!-- End of content variable-->
