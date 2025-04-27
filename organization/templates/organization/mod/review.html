@@ -2,24 +2,30 @@
 {% block title%}Media Review{% endblock%}
 {% block content %}
 <!-- Main content goes here-->
-{% if media_list %}
+{% if media_forms %}
         
-        {% for media in media_list %}
+        {% for pair in media_forms %}
         
                 <br>
-                Name: {{ media.file_name }}<br>
-                Username: {{ media.user.username }}<br>
-                Organization ID: {{ media.organization_id }}<br>
-                Status: {{ media.status }}<br>
-                Uploaded: {{ media.created }}<br>
+                Name: {{ pair.media.file_name }}<br>
+                Username: {{ pair.media.user.username }}<br>
+                Organization ID: {{ pair.media.organization_id }}<br>
+                Status: {{ pair.media.status }}<br>
+                Uploaded: {{ pair.media.created }}<br>
         
-                {% if media.status is None %}
-                        <img src="{{ media.media_path.url }}" class="waiting">
-                {% elif media.status %}
-                        <img src="{{ media.media_path.url }}" class="approve">
+                {% if pair.media.status is None %}
+                        <img src="{{ pair.media.media_path.url }}" class="waiting">
+                {% elif pair.media.status %}
+                        <img src="{{ pair.media.media_path.url }}" class="approve">
                 {% else %}
-                        <img src="{{ media.media_path.url }}" class="denied">
+                        <img src="{{ pair.media.media_path.url }}" class="denied">
                 {% endif %}
+                <form method="post" action="{% url 'organization:media_view_change' org.id pair.media.id%}">
+
+                        {% csrf_token %}
+                        {{ pair.form.as_p }} 
+                        <button type="submit">Update</button>
+                </form>
         <br>
         <br>
         {% endfor %}

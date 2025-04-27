@@ -1,8 +1,8 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from .utils import user_has_mod_perms
 from media_app.models import Media
-
+from media_app.forms import MediaReview
 
 @login_required()
 def mod_index(request, org_id):
@@ -16,5 +16,23 @@ def mod_index(request, org_id):
 def review_all(request, org_id):
     org = user_has_mod_perms(request.user, org_id)
     media_list = Media.objects.filter(organization=org).order_by("-created")
-    context = {"org": org, "media_list": media_list}
+
+    media_forms = []
+
+    for media in media_list:
+        form = MediaReview(instance=media)
+        media_forms.append({"media": media, "form": form})
+
+    context = {"org": org, "media_forms": media_forms}
     return render(request, "organization/mod/review.html", context)
+
+@login_required()
+def media_view_change(request, org_id, media_id):
+    user_has_mod_perms(request.user, org_id)
+    media = get_object_or_404(Media, id=media_id)
+
+    if request.method == 'POST':
+        form = MediaReview(request.POST, instance=media)
+        if form.is_valid():
+            form.save()
+            return redirect('organization:media_review', org_id = org_id)

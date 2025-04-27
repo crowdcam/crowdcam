@@ -34,14 +34,15 @@ class MediaForm(forms.Form):
 
 class MediaReview(forms.ModelForm):
     class Meta:
-        choices = [
-            ('True', "Approve"),
-            ('False',"Denied"),
-            ('None', "Awaiting Approval")
-        ]
         model = Media
         fields = ["status"]
+        widget = forms.Select(choices=(
+            (None, "Awaiting"),
+            (True, "Accepted"),
+            (False, "Rejected")),
+        )
+        
         widgets = {
-            "status": forms.ChoiceField(choices=choices, required=True)
+            "status": widget
         }
         edit_only = True
