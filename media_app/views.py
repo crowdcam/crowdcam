@@ -77,3 +77,19 @@ def delete_media(request, org_slug, media_id):
     media.media_path.delete(save=False)  # Delete the file from disk
     media.delete()                      # Delete the record from DB
     return redirect(reverse('media_app:media_index', args=[org_slug]))
+
+
+@login_required()
+def user_media(request, filter=None):
+    
+    if(filter is None):
+        media_list = Media.objects.filter(user=request.user).filter(status=None).order_by("-created")
+    elif(filter == "approved"):
+        media_list = Media.objects.filter(user=request.user).filter(status=True).order_by("-created")
+    elif(filter == "all"):
+        media_list = Media.objects.filter(user=request.user).order_by("-created")
+    else:
+        media_list = Media.objects.filter(ouser=request.user).filter(status=False).order_by("-created")
+
+    context = {"media_list": media_list, "filter": filter}
+    return render(request, "media_app/user_media.html", context)

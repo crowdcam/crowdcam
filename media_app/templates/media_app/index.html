@@ -3,6 +3,7 @@
 {% block content %}
 <!-- Main content goes here-->
 <a href="{% url 'media_app:upload' org.slug %}" class="btn-back">Upload New Image</a><br>
+<a href="{% url 'crowd_app:user_media' %}" class="btn-back">View Your Media</a><br>
 {% if media_list %}
         
         {% for media in media_list %}
