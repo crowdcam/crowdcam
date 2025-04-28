@@ -4,6 +4,7 @@
 <!-- Main content goes here-->
 <h2>Upload Media</h2>
 
+<h3>Media will be publicly viewable after moderator approval</h3>
 <form method="post" enctype="multipart/form-data">
     {% csrf_token %}
     {{ form.as_p }}
