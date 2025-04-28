@@ -3,15 +3,13 @@
 {% block content %}
 <!-- Main content goes here-->
 
-    {% if media %}
+{% if media %}
     <h1>Media: {{media.id}}</h1>
 
-    ID: {{media.id}}
-    <br>
-    Path: {{ media.media_path }}<br>
-    User ID: {{ media.user_id }}<br>
+    Filename: {{ media.file_name }}<br>
+    Username: {{ media.user.username }}<br>
     Organization ID: {{ media.organization_id }}<br>
-    Status: {{ media.status }}<br>
+    Status: {{ media.human_status }}<br>
     Created: {{ media.created }}<br>
     <img src="{{ media.media_path.url }}"><br>
 

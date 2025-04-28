@@ -34,14 +34,8 @@
     {% endfor %}
 </tbody>
 </table>
-
-<form method="get" action="{% url 'organization:download_users' org_id %}">
-    <button type="submit">Download All Users</button>
-</form>
-
-<form method="get" action="{% url 'organization:admin_index' org_id %}">
-    <button type="submit">Return to Admin Page</button>
-</form>
+<a class="btn" href="{% url 'organization:download_users' org_id %}">Download All Users</a>
+<a class="btn-back" href="{% url 'organization:admin_index' org_id %}">Return to Admin Page</a>
 {% else %}
 <p>No users were found</p>
 {% endif %}
