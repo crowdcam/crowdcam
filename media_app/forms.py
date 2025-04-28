@@ -1,4 +1,5 @@
 from django import forms
+from .models import Media
 from django.core.exceptions import ValidationError
 
 # new class for multiple files
@@ -30,3 +31,16 @@ class MediaForm(forms.Form):
             if file.content_type not in ALLOWED_FILES:
                 raise ValidationError(f"{file.name} is not a supported image type.")
         return files
+
+class MediaReview(forms.ModelForm):
+    class Meta:
+        model = Media
+        fields = ["status"]
+        widgets = {
+            "status": forms.Select(choices=(
+                (None, "Awaiting Review"),
+                (True, "Accepted"),
+                (False, "Rejected")),
+            )
+        }
+        edit_only = True

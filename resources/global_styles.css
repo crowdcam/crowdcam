@@ -266,3 +266,23 @@ th, td {
     padding: 8px;
     text-align: left;
 }
+
+.pic, .pic-mod, .approve, .denied, .waiting {
+    max-width: 256px;
+}
+
+.pic-mod, .approve, .denied, .waiting{
+    border:10px solid;
+}
+
+.approve{
+    border-color: green;
+}
+
+.denied{
+    border-color: red;
+}
+
+.waiting{
+    border-color: yellow;
+}
