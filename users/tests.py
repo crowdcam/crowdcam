@@ -14,7 +14,7 @@ class UserLoginViewTests(TestCase):
         self.set_up()
         # Test login with valid credentials
         response = self.client.post(self.login_url, {"username": "testuser", "password": "password123"})
-        self.assertRedirects(response, "/")
+        self.assertRedirects(response, reverse("crowd_app:home"))
 
     def test_login_invalid_credentials(self):
         self.set_up()
@@ -26,6 +26,6 @@ class UserLoginViewTests(TestCase):
     def test_login_with_next_redirect(self):
         self.set_up()
         # Test login with "next" parameter
-        next_url = reverse("users:login")
+        next_url = reverse("crowd_app:home")
         response = self.client.post(self.login_url, {"username": "testuser", "password": "password123", "next": next_url})
         self.assertRedirects(response, next_url)
