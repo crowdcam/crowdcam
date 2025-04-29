@@ -30,6 +30,7 @@
                             <a href="{% url 'organization:org_view' org.id%}">{{ org.name }}</a>
                             <ul class="sub-dropdown">
                                 <li><a href="{% url 'media_app:media_index' org.slug %}">View Media</a></li>
+                                <li><a href="{% url 'media_app:tag_index' org.slug %}">View Tags</a></li>
                                 <li><a href="{% url 'media_app:upload' org.slug %}">Upload Image</a></li>
                             </ul>
                         </li>
