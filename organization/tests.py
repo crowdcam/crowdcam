@@ -3,7 +3,8 @@ from django.contrib.auth.models import Group
 from django.test import TestCase
 from django.core.files.uploadedfile import SimpleUploadedFile
 from django.urls import reverse
-from organization.models import Organization, MediaFile
+from organization.models import Organization
+from media_app.models import Media
 from guardian.shortcuts import assign_perm
 
 User = get_user_model()
@@ -15,18 +16,18 @@ class OrganizationMediaUploadTest(TestCase):
         self.user = User.objects.create_user(username='testuser', password='password123')
 
     def test_upload_media_for_organization(self):
-        file_data = SimpleUploadedFile("orgA_file.txt", b"org A file content", content_type="text/plain")
-        media = MediaFile.objects.create(organization=self.org1, file=file_data)
+        file_data = SimpleUploadedFile("orgA_file1.txt", b"org A file content", content_type="text/plain")
+        media = Media.objects.create(organization=self.org1, media_path=file_data, user=self.user)
 
-        self.assertEqual(MediaFile.objects.count(), 1)
+        self.assertEqual(Media.objects.count(), 1)
         self.assertEqual(media.organization.name, "Org A")
-        self.assertTrue(media.file.name.startswith("organization_media/orgA_file"))
+        self.assertEqual(media.file_name, "orgA_file1.txt")
 
     def test_organization_file_is_not_shared(self):
         file_data = SimpleUploadedFile("orgA_file.txt", b"org A file content", content_type="text/plain")
-        MediaFile.objects.create(organization=self.org1, file=file_data)
+        Media.objects.create(organization=self.org1, media_path=file_data, user=self.user)
 
-        org2_files = MediaFile.objects.filter(organization=self.org2)
+        org2_files = Media.objects.filter(organization=self.org2)
         self.assertEqual(org2_files.count(), 0)
 
 class JoinOrgViewTests(TestCase):

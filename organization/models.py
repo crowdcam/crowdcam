@@ -31,8 +31,3 @@ class Organization(models.Model):
 
     def get_admin_group(self):
         return self.name + "_admin"
-
-class MediaFile(models.Model):
-    organization = models.ForeignKey('Organization', on_delete=models.CASCADE, related_name='media_files')
-    file = models.FileField(upload_to='organization_media/')
-    uploaded_at = models.DateTimeField(auto_now_add=True)

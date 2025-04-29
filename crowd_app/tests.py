@@ -1,9 +1,8 @@
 from django.test import TestCase
 from django.urls import reverse
-from django.contrib.auth.models import User
 from django.core.files.uploadedfile import SimpleUploadedFile
 from django.contrib.auth import get_user_model
-from crowd_app.models import Media
+from media_app.models import Media
 from organization.models import Organization
 
 class IndexViewTests(TestCase):
