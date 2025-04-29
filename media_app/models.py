@@ -8,6 +8,14 @@ def media_path_formatter(instance, filename):
     return Path ('media') / org / user / 'images' / filename
 
 # Create your models here.
+class Tag(models.Model):
+    name = models.CharField(max_length=50)
+    organization = models.ForeignKey("organization.Organization", on_delete=models.CASCADE)
+    bg_color = models.CharField(max_length=7, default="#F07857")
+
+    def __str__(self):
+        return self.name
+
 class Media(models.Model):
     # Explicit ID is not needed as it is handled automatically
     
@@ -15,7 +23,7 @@ class Media(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     organization = models.ForeignKey('organization.Organization', on_delete=models.CASCADE)
     # by default set tag to none, and on delete set tag feild to null
-    tag = models.ForeignKey('crowd_app.Tag', on_delete=models.SET_NULL, null=True, blank=True)
+    tag = models.ManyToManyField(Tag, blank=True)
     status = models.BooleanField(default=False)
     # use argurment auto new add to set the time the media was uploaded.
     created = models.DateField(auto_now_add=True)

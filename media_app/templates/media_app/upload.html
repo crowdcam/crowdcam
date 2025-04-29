@@ -6,7 +6,26 @@
 
 <form method="post" enctype="multipart/form-data">
     {% csrf_token %}
-    {{ form.as_p }}
+    <div>
+        <label for="{{form.file_field.id_for_label}}">Upload Files:</label><br>
+        {{form.file_field}}
+        {{form.file_field.errors}}
+    </div>
+
+    <div class="tag-pill-checkboxes">
+  {% for tag in form.fields.tags.queryset %}
+    <label class="pill-checkbox" style="background-color: {{ tag.bg_color }}">
+      <input type="checkbox" name="tags" value="{{ tag.pk }}" id="tag_{{ tag.pk }}">
+      <span class="pill-text">{{ tag.name }}</span>
+    </label>
+  {% endfor %}
+</div>
+
+    <div>
+        <label for="{{form.new_tag_name.id_for_label}}">Create a New Tag (optional):</label>
+        {{form.new_tag_name}}
+        {{form.new_tag_name.errors}}
+    </div>
     <button type="submit">Upload</button>
 </form>
 <a href="{% url 'media_app:media_index' org.slug %}" class="btn-back">Back to Media List</a>

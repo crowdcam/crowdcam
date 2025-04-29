@@ -16,6 +16,13 @@
                         Created: {{ media.created }}<br>
                 
                 <a href="{% url 'media_app:media_view' org.slug media.id %}"><img src="{{ media.media_path.url }}" style="max-width: 256px;"></a>
+                <p>Tags:
+                {% for tag in media.tag.all %}
+                {{tag.name}}
+                {% empty %}
+                {{ "No Tag" }}
+                {% endfor %}
+                </p>
                 <br>
                 <br>
                 {% endfor %}
