@@ -14,13 +14,11 @@
             <div class="org-actions">
                 <ul>
                 {% if org.is_mod %}
-                    <li><a href="#" class="org-mod-link">Moderator Tools</a></li>
+                    <li><a href="{% url 'organization:mod_index' org.org.id%}" class="btn">Mod Page</a></li>
                 {% endif %}
                 {% if org.is_admin %}
                     <li>
-                        <form action="{% url 'organization:admin_index' org.org.id %}" method="get">
-                            <button type="submit" class="org-admin-link">Admin Page</button>
-                        </form>
+                        <a href="{% url 'organization:admin_index' org.org.id%}" class="btn">Admin Page</a>
                     </li>
                 {% endif %}
                 </ul>
@@ -28,7 +26,7 @@
         <a class="btn-back" href="{% url 'organization:org_view' org.org.id %}">{{org.org.name}}</a>
 
         {% if org.is_mod %}
-            <p>Mod Placeholder</p>
+            <a href="{% url 'organization:mod_index' org.org.id%}" class="btn-back">Mod Page</a>
         {% endif %}
 
         {% if org.is_admin %}
@@ -40,9 +38,7 @@
         </div>
 
     {% endfor %}
-<form action="{% url 'organization:join_org' %}" method="get">
-    <button type="submit">Join A New Org</button>
-</form>
+
 {% else %}
 <p>No orgs found, <a href="{% url 'organization:join_org' %}">join one today!</a></p>
 {% endif %}

@@ -27,7 +27,7 @@
                 <ul id="dropdown" class="dropdown-content">
                     {% for org in user_orgs %}
                         <li class="dropdown-submenu">
-                            <a href="#">{{ org.name }}</a>
+                            <a href="{% url 'organization:org_view' org.id%}">{{ org.name }}</a>
                             <ul class="sub-dropdown">
                                 <li><a href="{% url 'media_app:media_index' org.slug %}">View Media</a></li>
                                 <li><a href="{% url 'media_app:tag_index' org.slug %}">View Tags</a></li>

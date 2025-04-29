@@ -1,0 +1,44 @@
+{% extends "crowd_app/main_page_template.html" %}
+{% block title%}Media Review{% endblock%}
+{% block content %}
+<!-- Main content goes here-->
+
+<a class="btn" href="{% url 'organization:media_review' org.id %}">View Queue</a>
+<a class="btn" href="{% url 'organization:media_review' org.id 'approved' %}">View Accepted</a>
+<a class="btn" href="{% url 'organization:media_review' org.id 'rejected'%}">View Rejected</a>
+<a class="btn" href="{% url 'organization:media_review' org.id 'all' %}">View All</a>
+
+{% if media_forms %}
+        
+        {% for pair in media_forms %}
+        
+                <br>
+                Name: {{ pair.media.file_name }}<br>
+                Username: {{ pair.media.user.username }}<br>
+                Organization ID: {{ pair.media.organization_id }}<br>
+                Status: {{ pair.media.human_status }}<br>
+                Uploaded: {{ pair.media.created }}<br>
+        
+                {% if pair.media.status is None %}
+                        <img src="{{ pair.media.media_path.url }}" class="waiting">
+                {% elif pair.media.status %}
+                        <img src="{{ pair.media.media_path.url }}" class="approve">
+                {% else %}
+                        <img src="{{ pair.media.media_path.url }}" class="denied">
+                {% endif %}
+                <form method="post" action="{% url 'organization:media_view_change' org.id pair.media.id %}">
+
+                        {% csrf_token %}
+                        {{ pair.form.as_p }} 
+                        <button type="submit">Update</button>
+                </form>
+        <br>
+        <br>
+        {% endfor %}
+        
+{% else %}
+<p>No media was found</p>
+{% endif %}
+
+<!-- End of content variable-->
+{% endblock %}

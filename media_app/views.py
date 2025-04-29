@@ -32,7 +32,7 @@ def media_index(request, org_slug):
     user_has_user_perms(request.user, org.id)
     
     # Filter media to this organization only
-    media_list = Media.objects.filter(organization=org).order_by("-created")
+    media_list = Media.objects.filter(organization=org).filter(status=True).order_by("-created")
     
     context = {
         "media_list": media_list,

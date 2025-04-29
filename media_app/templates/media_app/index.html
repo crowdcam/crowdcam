@@ -4,32 +4,29 @@
 <!-- Main content goes here-->
 <a href="{% url 'media_app:upload' org.slug %}" class="btn-back">Upload New Image</a><br>
 {% if media_list %}
-        
-                {% for media in media_list %}
-                
-                        ID: {{media.id}}
-                        <br>
-                        Path: {{ media.media_path }}<br>
-                        User ID: {{ media.user_id }}<br>
-                        Organization ID: {{ media.organization_id }}<br>
-                        Status: {{ media.status }}<br>
-                        Created: {{ media.created }}<br>
-                
-                <a href="{% url 'media_app:media_view' org.slug media.id %}"><img src="{{ media.media_path.url }}" style="max-width: 256px;"></a>
-                <p>Tags:
-                {% for tag in media.tag.all %}
-                {{tag.name}}
-                {% empty %}
-                {{ "No Tag" }}
-                {% endfor %}
-                </p>
-                <br>
-                <br>
-                {% endfor %}
-        
-        {% else %}
-        <p>No media was found</p>
-        {% endif %}
+    {% for media in media_list %}
+
+
+            Filename: {{ media.file_name }}<br>
+            Username: {{ media.user.username }}<br>
+            Status: {{ media.human_status }}<br>
+            Uploaded: {{ media.created }}<br>
+
+    <a href="{% url 'media_app:media_view' org.slug media.id %}"><img src="{{ media.media_path.url }}" style="max-width: 256px;"></a>
+    <p>Tags:
+            {% for tag in media.tag.all %}
+            {{tag.name}}
+            {% empty %}
+            {{ "No Tag" }}
+            {% endfor %}
+            </p>        
+    <br>
+    <br>
+    {% endfor %}
+
+{% else %}
+<p>No media was found</p>
+{% endif %}
 
 <!-- End of content variable-->
 {% endblock %}

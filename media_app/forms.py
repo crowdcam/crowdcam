@@ -1,4 +1,5 @@
 from django import forms
+from .models import Media
 from django.core.exceptions import ValidationError
 from .models import Tag
 
@@ -53,7 +54,6 @@ class MediaForm(forms.Form):
                 raise ValidationError(f"{file.name} is not a supported image type.")
         return files
 
-
 class MediaTagForm(forms.Form):
     tags = forms.ModelMultipleChoiceField(
         queryset=Tag.objects.none(),
@@ -72,3 +72,16 @@ class MediaTagForm(forms.Form):
         super().__init__(*args, **kwargs)
         if organization:
             self.fields['tags'].queryset = Tag.objects.filter(organization=organization)
+
+class MediaReview(forms.ModelForm):
+    class Meta:
+        model = Media
+        fields = ["status"]
+        widgets = {
+            "status": forms.Select(choices=(
+                (None, "Awaiting Review"),
+                (True, "Accepted"),
+                (False, "Rejected")),
+            )
+        }
+        edit_only = True
