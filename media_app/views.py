@@ -3,9 +3,13 @@ from django.contrib.auth.decorators import login_required
 from django.urls import reverse
 from .models import Media, Tag
 from organization.models import Organization
+from django.http import HttpResponse
 from organization.utils import user_has_mod_perms, user_has_user_perms
 from .forms import MediaForm, MediaTagForm
 import random
+import zipfile
+import os
+import io
 
 # colors for random bg
 colors = [
@@ -39,6 +43,30 @@ def media_index(request, org_slug):
         "org": org
     }
     return render(request, "media_app/index.html", context)
+
+@login_required()
+def media_download(request, org_slug):
+    org = get_object_or_404(Organization, slug=org_slug)
+    user_has_user_perms(request.user, org.id)
+
+    media_list = Media.objects.filter(organization=org).filter(status=True)
+
+    buffer = io.BytesIO()
+    
+    zip_file_path = f'{org.name}-media.zip'
+    with zipfile.ZipFile(buffer, 'w', zipfile.ZIP_DEFLATED) as zip:
+    # Add files to the archive here
+        for media in media_list:
+            zip.write(media.media_path.path, arcname=os.path.basename(media.media_path.name))
+
+    buffer.seek(0)
+    response = HttpResponse(
+        buffer,
+        content_type="application/x-zip-compressed",
+        headers={"Content-Disposition": f'attachment; filename={zip_file_path}'},
+    )     
+    return response  
+    
 
 @login_required()
 def media_view(request, org_slug, media_id):

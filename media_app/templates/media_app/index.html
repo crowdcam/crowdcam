@@ -24,7 +24,7 @@
     <br>
     <br>
     {% endfor %}
-
+<a href="{% url 'media_app:media_download' org.slug %}" class="btn">Download Media</a>
 {% else %}
 <p>No media was found</p>
 {% endif %}
