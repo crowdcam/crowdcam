@@ -40,6 +40,7 @@
             {% endif %}
             <li><a href="{% url 'organization:user_orgs' %}">Your Orgs</a></li>
             <li><a href="{% url 'organization:create_org' %}">Create a new Org</a></li>
+            <li><a href="{% url 'crowd_app:user_media' %}">View Your Media</a></li>
             {% endif %}
         </ul>
         <ul class="nav-right">
@@ -47,7 +48,7 @@
             <li><a href="{% url 'users:create_user' %}">Create an account</a></li>
             <li><a href="{% url 'users:login' %}">Login</a></li>
             {% else %}
-          <li><a href="{% url 'users:logout' %}">Logout</a></li>
+            <li><a href="{% url 'users:logout' %}">Logout</a></li>
             {% endif %}
         </ul>
     </nav>
