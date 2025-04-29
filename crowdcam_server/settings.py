@@ -12,14 +12,14 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 
 from pathlib import Path
 import environ
-
+import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 # Creates the structure our env file is supposed to mimic
 env = environ.Env(
-    DEBUG=(bool, False),
+    DEBUG=(bool, True),
     SECRET_KEY=(str, 'abc')
 )
 
@@ -58,7 +58,8 @@ INSTALLED_APPS = [
 ]
 if(not(DEBUG)):
     INSTALLED_APPS.append("mod_wsgi.server")
-
+if(DEBUG):
+    INSTALLED_APPS.append("mod_wsgi.server")
 
 
 MIDDLEWARE = [
@@ -140,16 +141,49 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 
 STATIC_URL = "/static/"
-
+STATIC_ROOT = "/home/azureuser/crowdcam/resources/"
 # Add static files
 STATICFILES_DIRS = [
-    BASE_DIR / "resources"
+#    BASE_DIR / "resources"
 ]
 
-MEDIA_ROOT = BASE_DIR / "media"
-MEDIA_URL = "/media/"
+MEDIA_ROOT = os.path.join(BASE_DIR,'media')
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'filters': {
+        'require_debug_false': {
+            '()': 'django.utils.log.RequireDebugFalse'
+        }
+    },
+    'handlers': {
+        'applogfile': {
+            'level':'DEBUG',
+            'class':'logging.handlers.RotatingFileHandler',
+            'filename': BASE_DIR / 'APPNAME.log',
+            'maxBytes': 1024*1024*15, # 15MB
+            'backupCount': 10,
+        },
+    },
+    'loggers': {
+        'APPNAME': {
+            'handlers': ['applogfile',],
+            'level': 'DEBUG',
+        },
+    }
+}
+import mimetypes
+mimetypes.add_type("image/png", ".png", True)
+mimetypes.add_type("text/css",".css",True) 
+mimetypes.add_type("image/jpeg",".jpeg",True)
+mimetypes.add_type("image/jpg",".jpg",True)
+mimetypes.add_type("image/png",".png",True)
+mimetypes.add_type("image/png",".PNG",True)
+mimetypes.add_type("image/png",".PNg",True)
+mimetypes.add_type("image/png",".pNG",True)

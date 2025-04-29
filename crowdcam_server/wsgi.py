@@ -14,3 +14,7 @@ from django.core.wsgi import get_wsgi_application
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "crowdcam_server.settings")
 
 application = get_wsgi_application()
+
+import mimetypes
+mimetypes.add_type("image/png", ".png", True)
+mimetypes.add_type("text/css",".css",True)
