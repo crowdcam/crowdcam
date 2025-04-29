@@ -23,9 +23,14 @@ from django.conf import settings
 urlpatterns = [
     path("admin/", admin.site.urls),
     path("", include("crowd_app.urls")),
+    path("<slug:org_slug>/media/", include("media_app.urls")),
     path("users/", include("users.urls")),
     path("organization/", include("organization.urls"))
 ]
+
+# override built-in error handling
+handler404 = "crowd_app.views.error"
+handler403 = "crowd_app.views.error"
 
 # code to make django serve files in debug
 if settings.DEBUG:

@@ -1,0 +1,25 @@
+{% extends "crowd_app/main_page_template.html" %}
+{% block title%}Inspect{% endblock%}
+{% block content %}
+<!-- Main content goes here-->
+
+{% if media %}
+    <h1>Media: {{media.id}}</h1>
+
+    Filename: {{ media.file_name }}<br>
+    Username: {{ media.user.username }}<br>
+    Organization ID: {{ media.organization_id }}<br>
+    Status: {{ media.human_status }}<br>
+    Created: {{ media.created }}<br>
+    <img src="{{ media.media_path.url }}"><br>
+
+    {% if can_delete %}
+    <a class="btn-delete" href="{% url 'media_app:media_delete' org.slug media.id %}" onclick="return confirm('Are you sure you want to delete this image?');">Delete</a>
+    {% endif %}
+
+    {% else %}
+    <p>404: Media not found</p>
+    {% endif %}
+
+<!-- End of content variable-->
+{% endblock %}

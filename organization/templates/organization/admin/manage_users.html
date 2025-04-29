@@ -34,8 +34,8 @@
     {% endfor %}
 </tbody>
 </table>
-
-<a href="{% url 'organization:download_users' org_id %}">Download All Users</a>
+<a class="btn" href="{% url 'organization:download_users' org_id %}">Download All Users</a>
+<a class="btn-back" href="{% url 'organization:admin_index' org_id %}">Return to Admin Page</a>
 {% else %}
 <p>No users were found</p>
 {% endif %}

@@ -1,0 +1,11 @@
+{% extends "crowd_app/main_page_template.html" %}
+{% block title%} Error! {% endblock%}
+{% block content %}
+<!-- Main content goes here-->
+<h2>An Error has Occured</h2>
+
+{% if exception %}
+<div><h2>{{ exception }}</h2></div>
+{% endif %}
+<!-- End of content variable-->
+{% endblock %}
