@@ -111,6 +111,26 @@ form label {
     color: #333;
 }
 
+.tag-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.tag-pill {
+  display: inline-block;
+  background-color: #e0f7fa; /* light blue */
+  color: #00796b; /* darker teal */
+  padding: 5px 12px;
+  border-radius: 9999px; /* maximum roundness */
+  font-size: 0.9em;
+  font-weight: 500;
+  text-align: center;
+}
+
 /* Buttons */
 form button, .btn {
     display: inline-block;
@@ -243,6 +263,82 @@ button:hover {
 
 .sub-dropdown li a:hover {
     background-color: #4a4a4a;
+}
+
+/* tag styles */
+.tag-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+  
+.tag-pill {
+    display: inline-block;
+    background-color: #e0f7fa;
+    color: white;
+    padding: 5px 12px;
+    border-radius: 9999px;
+    font-size: 0.9em;
+    font-weight: 500;
+    text-align: center;
+}
+
+.tag-pill a {
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.tag-pill-checkboxes {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.pill-checkbox {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    padding: 6px 14px;
+    border-radius: 9999px;
+    font-size: 0.9em;
+    font-weight: 500;
+    color: white;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+/* Hide default checkbox */
+.pill-checkbox input[type="checkbox"] {
+    display: none;
+}
+
+.pill-text {
+    position: relative;
+    padding-left: 20px; /* space for the + / - */
+}
+
+/* + symbol before text by default */
+.pill-text::before {
+    content: "+";
+    position: absolute;
+    left: 0;
+    font-weight: bold;
+}
+
+/* When the checkbox is checked, change the symbol to - */
+.pill-checkbox input[type="checkbox"]:checked + .pill-text::before {
+    content: "-";
+}
+
+/* When checked, bold the text and optionally change colors */
+.pill-checkbox input[type="checkbox"]:checked + .pill-text {
+    border-radius: 9999px;
+    transition: background-color 0.3s, color 0.3s;
 }
 
 /* Footer */

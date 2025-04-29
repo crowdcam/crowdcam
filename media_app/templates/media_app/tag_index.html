@@ -1,0 +1,18 @@
+{% extends "crowd_app/main_page_template.html" %}
+{% block title%}Tags{% endblock%}
+{% block content %}
+<!-- Main content goes here-->
+{% if tags %}
+
+    <ul class="tag-list">
+    {% for tag in tags %}
+    <li class="tag-pill" style="background-color: {{tag.bg_color}};"><a href="{% url 'media_app:tag_view' org.slug tag.id %}">{{tag.name}}</a></li>
+    {% endfor %}
+    </ul>
+        
+{% else %}
+<p>No tags were found</p>
+{% endif %}
+
+<!-- End of content variable-->
+{% endblock %}
