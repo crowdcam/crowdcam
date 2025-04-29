@@ -10,21 +10,21 @@
 
 {% if media_list %}
         
-    {% for pair in media_list %}
+    {% for media in media_list %}
     
             <br>
-            Name: {{ pair.media.file_name }}<br>
-            Username: {{ pair.media.user.username }}<br>
-            Organization: {{ pair.media.organization.name }}<br>
-            Status: {{ pair.media.human_status }}<br>
-            Uploaded: {{ pair.media.created }}<br>
+            Name: {{ media.file_name }}<br>
+            Username: {{ media.user.username }}<br>
+            Organization: {{ media.organization.name }}<br>
+            Status: {{ media.human_status }}<br>
+            Uploaded: {{ media.created }}<br>
     
-            {% if pair.media.status is None %}
-                    <img src="{{ pair.media.media_path.url }}" class="waiting">
-            {% elif pair.media.status %}
-                    <img src="{{ pair.media.media_path.url }}" class="approve">
+            {% if media.status is None %}
+                    <img src="{{ media.media_path.url }}" class="waiting">
+            {% elif media.status %}
+                    <img src="{{ media.media_path.url }}" class="approve">
             {% else %}
-                    <img src="{{ pair.media.media_path.url }}" class="denied">
+                    <img src="{{ media.media_path.url }}" class="denied">
             {% endif %}
     <br>
     <br>
