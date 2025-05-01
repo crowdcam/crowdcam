@@ -38,8 +38,8 @@
                 </ul>
             </li>
             {% endif %}
-            <li><a href="{% url 'organization:user_orgs' %}">Your Orgs</a></li>
-            <li><a href="{% url 'organization:create_org' %}">Create a new Org</a></li>
+            <li><a href="{% url 'organization:user_orgs' %}">Your Organization</a></li>
+            <li><a href="{% url 'organization:create_org' %}">Create a new Organization</a></li>
             <li><a href="{% url 'crowd_app:user_media' %}">View Your Media</a></li>
             {% endif %}
         </ul>
@@ -48,6 +48,7 @@
             <li><a href="{% url 'users:create_user' %}">Create an account</a></li>
             <li><a href="{% url 'users:login' %}">Login</a></li>
             {% else %}
+            <li>Welcome {{request.user.username}}</li>
             <li><a href="{% url 'users:logout' %}">Logout</a></li>
             {% endif %}
         </ul>
