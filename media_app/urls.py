@@ -11,4 +11,6 @@ urlpatterns = [
     path("tags/", views.tag_index, name="tag_index"),
     path("tags/<int:tag_id>", views.tag_view, name="tag_view"),
     path('tags/delete/<int:tag_id>', views.delete_tag, name='tag_delete'),
+    path('download', views.media_download, name='media_download'),
+    
 ]
