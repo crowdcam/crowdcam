@@ -48,7 +48,7 @@ nav ul {
     gap: 20px;
 }
 
-nav ul li a {
+nav ul li a, nav ul li {
     color: #fff;
     text-decoration: none;
     font-weight: 600;
@@ -64,7 +64,7 @@ nav ul li a:hover {
 /* Main Content */
 main {
     padding: 40px;
-    max-width: 960px;
+    max-width: 1050px;
     margin: auto;
 }
 
@@ -111,11 +111,31 @@ form label {
     color: #333;
 }
 
+.tag-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.tag-pill {
+  display: inline-block;
+  background-color: #e0f7fa; /* light blue */
+  color: #00796b; /* darker teal */
+  padding: 5px 12px;
+  border-radius: 9999px; /* maximum roundness */
+  font-size: 0.9em;
+  font-weight: 500;
+  text-align: center;
+}
+
 /* Buttons */
 form button, .btn {
     display: inline-block;
     background-color: #35b2d8;
-    color: white;
+    color: #fff;
     font-size: 16px;
     font-weight: 600;
     padding: 12px 24px;
@@ -123,6 +143,7 @@ form button, .btn {
     border-radius: 6px;
     cursor: pointer;
     transition: background-color 0.3s ease;
+    text-decoration: none;
 }
 
 button:hover {
@@ -151,11 +172,12 @@ button:hover {
     font-weight: 600;
     transition: all 0.2s ease-in-out;
     cursor: pointer;
+    margin: 5px;
 }
 
 .btn-back:hover {
     background-color: #35b2d8;
-    color: white;
+    color: #fff;
     text-decoration: none;
 }
 
@@ -175,7 +197,7 @@ button:hover {
 
 .btn-delete:hover {
     background-color: #c11919;
-    color: white;
+    color: #fff;
     text-decoration: none;
 }
 
@@ -187,10 +209,9 @@ button:hover {
 }
 
 .dropdown > a {
-    color: white;
+    color: #fff;
     padding: 10px;
     text-decoration: none;
-    font-weight: bold;
 }
 
 .dropdown-content {
@@ -214,7 +235,7 @@ button:hover {
 /* Submenu (each org) */
 .dropdown-submenu > a {
     padding: 10px;
-    color: white;
+    color: #fff;
     display: block;
     text-decoration: none;
     background-color: #606060;
@@ -237,12 +258,141 @@ button:hover {
 .sub-dropdown li a {
     display: block;
     padding: 8px 12px;
-    color: white;
+    color: #fff;
     text-decoration: none;
 }
 
 .sub-dropdown li a:hover {
     background-color: #4a4a4a;
+}
+
+/* Media styles */
+.media-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: flex-start;
+}
+
+.media-card {
+    display: flex;
+    flex-direction: row;
+    gap: 16px;
+    border: 1px solid #ddd;
+    padding: 12px;
+    border-radius: 12px;
+    background-color: #f9f9f9;
+    max-width: 600px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.media-card img {
+    max-width: 100px;
+    height: auto;
+    border-radius: 8px;
+}
+
+.media-info {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 4px;
+}
+
+/* org styles */
+.org-card {
+    text-decoration: none;
+}
+
+.org-name a {
+    text-decoration: none;
+    color: black
+}
+
+.org-name a:hover {
+    color: #010463;
+    text-decoration: underline;
+}
+
+.org-list li {
+    list-style: none;
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+/* tag styles */
+.tag-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+  
+.tag-pill {
+    display: inline-block;
+    background-color: #e0f7fa;
+    color: #fff;
+    padding: 5px 12px;
+    border-radius: 9999px;
+    font-size: 0.9em;
+    font-weight: 500;
+    text-align: center;
+}
+
+.tag-pill a {
+    color: #fff;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.tag-pill-checkboxes {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.pill-checkbox {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    padding: 6px 14px;
+    border-radius: 9999px;
+    font-size: 0.9em;
+    font-weight: 500;
+    color: #fff;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+/* Hide default checkbox */
+.pill-checkbox input[type="checkbox"] {
+    display: none;
+}
+
+.pill-text {
+    position: relative;
+    padding-left: 20px; /* space for the + / - */
+}
+
+/* + symbol before text by default */
+.pill-text::before {
+    content: "+";
+    position: absolute;
+    left: 0;
+    font-weight: bold;
+}
+
+/* When the checkbox is checked, change the symbol to - */
+.pill-checkbox input[type="checkbox"]:checked + .pill-text::before {
+    content: "-";
+}
+
+/* When checked, bold the text and optionally change colors */
+.pill-checkbox input[type="checkbox"]:checked + .pill-text {
+    border-radius: 9999px;
+    transition: background-color 0.3s, color 0.3s;
 }
 
 /* Footer */

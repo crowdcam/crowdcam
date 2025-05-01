@@ -30,6 +30,7 @@
                             <a href="{% url 'organization:org_view' org.id%}">{{ org.name }}</a>
                             <ul class="sub-dropdown">
                                 <li><a href="{% url 'media_app:media_index' org.slug %}">View Media</a></li>
+                                <li><a href="{% url 'media_app:tag_index' org.slug %}">View Tags</a></li>
                                 <li><a href="{% url 'media_app:upload' org.slug %}">Upload Image</a></li>
                             </ul>
                         </li>
@@ -37,8 +38,9 @@
                 </ul>
             </li>
             {% endif %}
-            <li><a href="{% url 'organization:user_orgs' %}">Your Orgs</a></li>
-            <li><a href="{% url 'organization:create_org' %}">Create a new Org</a></li>
+            <li><a href="{% url 'organization:user_orgs' %}">Your Organization</a></li>
+            <li><a href="{% url 'organization:create_org' %}">Create a new Organization</a></li>
+            <li><a href="{% url 'crowd_app:user_media' %}">View Your Media</a></li>
             {% endif %}
         </ul>
         <ul class="nav-right">
@@ -46,7 +48,8 @@
             <li><a href="{% url 'users:create_user' %}">Create an account</a></li>
             <li><a href="{% url 'users:login' %}">Login</a></li>
             {% else %}
-          <li><a href="{% url 'users:logout' %}">Logout</a></li>
+            <li>Welcome {{request.user.username}}</li>
+            <li><a href="{% url 'users:logout' %}">Logout</a></li>
             {% endif %}
         </ul>
     </nav>

@@ -21,13 +21,12 @@
 <form method="post" enctype="multipart/form-data">
     {% csrf_token %}
     {{ form.as_p }}
-    <button type="submit">Update User</button>
+    <button type="submit" onclick="return confirm('Are you sure you want to update this user?');">Update User</button>
 </form>
 {% else %}
 <h2>User is not a member of your org</h2>
 {% endif %}
-<form action="{% url 'organization:manage_users' org_id %}" method="get">
-    <button type="submit">Return to Manage Users</button>
-</form>
+
+<a class="btn-back" href="{% url 'organization:manage_users' org_id %}">Return To Manage Users</a>
 <!-- End of content variable-->
 {% endblock %}

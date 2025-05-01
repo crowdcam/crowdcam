@@ -1,5 +1,5 @@
 {% extends "crowd_app/main_page_template.html" %}
-{% block title%}Set Org Join Code{% endblock%}
+{% block title%}Set Organization Join Code{% endblock%}
 {% block content %}
 <!-- Main content goes here-->
 <h2>Set Join Code</h2>
@@ -13,8 +13,7 @@
     <button type="submit">Set Join Code</button>
 </form>
 
-<form action="{% url 'organization:admin_index' org_id %}" method="get" style="display: inline;">
-    <button type="submit">Back to Admin Index</button>
-</form>
+<a class="btn-back" href="{% url 'organization:admin_index' org_id %}">Back to Admin Index</a>
+
 <!-- End of content variable-->
 {% endblock %}
