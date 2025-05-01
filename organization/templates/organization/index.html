@@ -1,5 +1,5 @@
 {% extends "crowd_app/main_page_template.html" %}
-{% block title%}Your Orgs{% endblock%}
+{% block title%}Your Organizations{% endblock%}
 {% block content %}
 <!-- Main content goes here-->
 
@@ -12,7 +12,7 @@
                 <a href="{% url 'organization:org_view' org.org.id %}">{{ org.org.name }}</a>
             </h2>
             <div class="org-actions">
-                <ul>
+                <ul class="org-list">
                 {% if org.is_mod %}
                     <li><a href="{% url 'organization:mod_index' org.org.id%}" class="btn">Mod Page</a></li>
                 {% endif %}
@@ -22,18 +22,6 @@
                     </li>
                 {% endif %}
                 </ul>
-                
-        <a class="btn-back" href="{% url 'organization:org_view' org.org.id %}">{{org.org.name}}</a>
-
-        {% if org.is_mod %}
-            <a href="{% url 'organization:mod_index' org.org.id%}" class="btn-back">Mod Page</a>
-        {% endif %}
-
-        {% if org.is_admin %}
-            <a class="btn-back" href="{% url 'organization:admin_index' org.org.id %}">Admin Page</a>
-        {% endif %}
-        <br>
-        <br>
             </div>
         </div>
 
