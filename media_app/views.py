@@ -192,7 +192,7 @@ def tag_view(request, org_slug, tag_id):
     user_has_user_perms(request.user, org.id)
 
     tag = get_object_or_404(Tag, id= tag_id, organization= org)
-    media_list = Media.objects.filter(tag= tag).order_by("-created")
+    media_list = Media.objects.filter(tag= tag).filter(status=True).order_by("-created")
 
     context = {
         "tag": tag,
